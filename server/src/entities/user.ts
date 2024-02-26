@@ -7,7 +7,8 @@ import {
   Unique,
 } from 'typeorm'
 import { z } from 'zod'
-import { Project } from './project'
+import { Pizza } from './pizza'
+import { Rating } from './rating'
 
 @Entity()
 export class User {
@@ -18,16 +19,22 @@ export class User {
   @Column('text')
   email: string
 
-  @Column('text', { select: false })
-  password: string
+  @Column('text', { unique: true })
+  profile: string
 
-  @OneToMany(() => Project, (project) => project.user, {
+  @OneToMany(() => Pizza, (pizza) => pizza.user, {
     cascade: ['insert'],
   })
-  projects: Project[]
+  pizzas: Pizza[]
+
+  @OneToMany(() => Rating, (rating) => rating.user, {
+    cascade: ['insert', 'update'],
+    onDelete: 'CASCADE',
+  })
+  rating: Rating[]
 }
 
-export type UserBare = Omit<User, 'projects'>
+export type UserBare = Omit<User, 'pizzas' | 'rating'>
 
 export const userSchema = validates<UserBare>().with({
   id: z.number().int().positive(),
@@ -37,7 +44,7 @@ export const userSchema = validates<UserBare>().with({
   // log in with "email@example" while they have
   // registered with "Email@example.com".
   email: z.string().trim().toLowerCase().email(),
-  password: z.string().min(8).max(64),
+  profile: z.string().min(8).max(64),
 })
 
 export const userInsertSchema = userSchema.omit({ id: true })

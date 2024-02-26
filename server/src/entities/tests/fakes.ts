@@ -1,7 +1,5 @@
-import type { User } from '@server/entities/user'
-import type { Project } from '@server/entities/project'
-import type { Bug } from '@server/entities/bug'
 import { random } from '@tests/utils/random'
+import type { User, Brand, Country, Pizza } from '..'
 
 const randomId = () => random.integer({ min: 1, max: 2147483647 })
 
@@ -12,7 +10,7 @@ const randomId = () => random.integer({ min: 1, max: 2147483647 })
 export const fakeUser = <T extends Partial<User>>(overrides: T = {} as T) => ({
   id: randomId(),
   email: random.email(),
-  password: 'Password.123!',
+  profile: 'google.com/123!',
   ...overrides,
 })
 
@@ -20,7 +18,7 @@ export const fakeUser = <T extends Partial<User>>(overrides: T = {} as T) => ({
  * Generates a fake project with some default test data.
  * @param overrides Any properties that should be different from default fake data.
  */
-export const fakeProject = <T extends Partial<Project>>(
+export const fakePizza = <T extends Partial<Pizza>>(
   overrides: T = {} as T
 ) => ({
   id: randomId(),
@@ -32,11 +30,22 @@ export const fakeProject = <T extends Partial<Project>>(
  * Generates a fake bug with some default test data.
  * @param overrides Any properties that should be different from default fake data.
  */
-export const fakeBug = <T extends Partial<Bug>>(overrides: T = {} as T) => ({
+export const fakeBrand = <T extends Partial<Brand>>(
+  overrides: T = {} as T
+) => ({
   id: randomId(),
-  name: 'OurFakeError',
-  code: '500',
-  stacktrace: 'Error: OurFakeError\n    at <anonymous>:1:1',
-  resolvedAt: null,
+  title: 'FakeBrandTitle',
+  ...overrides,
+})
+
+/**
+ * Generates a fake bug with some default test data.
+ * @param overrides Any properties that should be different from default fake data.
+ */
+export const fakeCountry = <T extends Partial<Country>>(
+  overrides: T = {} as T
+) => ({
+  id: randomId(),
+  name: 'FakeCountryName',
   ...overrides,
 })

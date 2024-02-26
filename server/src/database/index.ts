@@ -5,7 +5,7 @@ import { newDb } from 'pg-mem'
 import * as entities from '../entities'
 
 export function createDatabase(
-  options: Partial<DataSourceOptions | { type: 'pg-mem' }> = {}
+  options: Partial<DataSourceOptions | { type: 'pg-mem' }> = { type: 'pg-mem' }
 ) {
   // Run with an in-memory database.
   if (options.type === 'pg-mem') {

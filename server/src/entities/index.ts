@@ -1,4 +1,5 @@
 /* eslint-disable import/export */
-export { Bug } from './bug'
-export { Project } from './project'
 export { User } from './user'
+export { Pizza } from './pizza'
+export { Brand } from './brand'
+export { Country } from './country'
