@@ -12,10 +12,10 @@ export class Rating {
   @Column('numeric', { nullable: false })
   rating: Number
 
-  @ManyToOne(() => User, (user) => user.rating)
+  @ManyToOne(() => User, (user) => user.ratings, { cascade: ['insert'] })
   user: User
 
-  @ManyToOne(() => Pizza, (pizza) => pizza.ratings, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Pizza, (pizza) => pizza.ratings)
   pizza: Pizza
 }
 

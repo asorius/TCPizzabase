@@ -16,19 +16,19 @@ export class Pizza {
   @PrimaryGeneratedColumn('increment')
   id: number
 
-  @Column('integer')
-  userId: number
-
   @Column('text', { nullable: false })
   name: string
 
-  @ManyToOne(() => User, (user) => user.pizzas)
+  @ManyToOne(() => User, (user) => user.pizzas, { cascade: ['insert'] })
   user: User
 
-  @ManyToOne(() => Brand, (brand) => brand.pizzas, { cascade: true })
+  @ManyToOne(() => Brand, (brand) => brand.pizzas, { cascade: ['insert'] })
   brand: Brand
 
-  @OneToMany(() => Rating, (rating) => rating.pizza)
+  @OneToMany(() => Rating, (rating) => rating.pizza, {
+    cascade: ['insert'],
+    onDelete: 'CASCADE',
+  })
   ratings: Rating[]
 }
 
@@ -36,11 +36,11 @@ export type PizzaBare = Omit<Pizza, 'user' | 'brand' | 'ratings'>
 
 export const pizzaSchema = validates<PizzaBare>().with({
   id: z.number().int().positive(),
-  userId: z.number().positive(),
+  // userId: z.number().positive(),
   name: z
     .string()
     .trim()
-    .min(5, 'Pizzas name must be at least 5 characters long')
+    .min(5, 'Pizza name must be at least 5 characters long')
     .max(100),
 })
 
@@ -59,4 +59,4 @@ export type PizzaInsert = z.infer<typeof pizzaInsertSchema>
 
 // user can: sign up, login, see pizzas with ratings
 // if logged in user can: add new pizza with a rating, or add their rating to already existing pizza
-// if user is admin, they can: delete pizzas, delete brands (country should be automaticaly delete itself if there are no brands in it)
+// if user is admin, they can: delete pizzas, delete brands (country should automaticaly delete itself if there are no brands in it)

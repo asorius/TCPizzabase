@@ -22,27 +22,17 @@ export class User {
   @Column('text', { unique: true })
   profile: string
 
-  @OneToMany(() => Pizza, (pizza) => pizza.user, {
-    cascade: ['insert'],
-  })
+  @OneToMany(() => Pizza, (pizza) => pizza.user)
   pizzas: Pizza[]
 
-  @OneToMany(() => Rating, (rating) => rating.user, {
-    cascade: ['insert', 'update'],
-    onDelete: 'CASCADE',
-  })
-  rating: Rating[]
+  @OneToMany(() => Rating, (rating) => rating.user)
+  ratings: Rating[]
 }
 
-export type UserBare = Omit<User, 'pizzas' | 'rating'>
+export type UserBare = Omit<User, 'pizzas' | 'ratings'>
 
 export const userSchema = validates<UserBare>().with({
   id: z.number().int().positive(),
-
-  // We will trim and lowercase all emails, otherwise
-  // lots of users will be frustrated when they try to
-  // log in with "email@example" while they have
-  // registered with "Email@example.com".
   email: z.string().trim().toLowerCase().email(),
   profile: z.string().min(8).max(64),
 })

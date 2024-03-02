@@ -1,5 +1,11 @@
 import { validates } from '@server/utils/validation'
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm'
 import { z } from 'zod'
 import { Pizza } from './pizza'
 import { Country } from './country'
@@ -14,8 +20,12 @@ export class Brand {
 
   @OneToMany(() => Pizza, (pizza) => pizza.brand)
   pizzas: Pizza[]
+  // @OneToMany(() => Pizza, (pizza) => pizza.brand, { cascade: ['insert'] })
+  // pizzas: Pizza[]
 
-  @OneToMany(() => Country, (country) => country.brands)
+  @ManyToOne(() => Country, (country) => country.brands, {
+    cascade: ['insert'],
+  })
   country: Country
 }
 
@@ -26,7 +36,7 @@ export const brandSchema = validates<BrandBare>().with({
   title: z
     .string()
     .trim()
-    .min(5, 'Pizzas name must be at least 5 characters long')
+    .min(5, 'Brand title must be at least 5 characters long')
     .max(100),
 })
 

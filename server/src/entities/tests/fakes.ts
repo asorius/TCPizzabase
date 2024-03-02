@@ -22,7 +22,7 @@ export const fakePizza = <T extends Partial<Pizza>>(
   overrides: T = {} as T
 ) => ({
   id: randomId(),
-  name: random.string(),
+  name: `pizza${random.string()}`,
   ...overrides,
 })
 
@@ -34,7 +34,7 @@ export const fakeBrand = <T extends Partial<Brand>>(
   overrides: T = {} as T
 ) => ({
   id: randomId(),
-  title: 'FakeBrandTitle',
+  title: `brand${random.string()}`,
   ...overrides,
 })
 
@@ -46,6 +46,6 @@ export const fakeCountry = <T extends Partial<Country>>(
   overrides: T = {} as T
 ) => ({
   id: randomId(),
-  name: 'FakeCountryName',
+  name: `country${random.string()}`,
   ...overrides,
 })

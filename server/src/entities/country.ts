@@ -1,5 +1,5 @@
 import { validates } from '@server/utils/validation'
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
 import { z } from 'zod'
 import { Brand } from './brand'
 
@@ -11,7 +11,9 @@ export class Country {
   @Column('text', { nullable: false })
   name: string
 
-  @ManyToOne(() => Brand, (brand) => brand.country)
+  @OneToMany(() => Brand, (brand) => brand.country, {
+    cascade: ['insert'],
+  })
   brands: Brand[]
 }
 
