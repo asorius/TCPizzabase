@@ -20,7 +20,7 @@ export class User {
   email: string
 
   @Column('text', { unique: true })
-  profile: string
+  password: string
 
   @OneToMany(() => Pizza, (pizza) => pizza.user)
   pizzas: Pizza[]
@@ -34,7 +34,7 @@ export type UserBare = Omit<User, 'pizzas' | 'ratings'>
 export const userSchema = validates<UserBare>().with({
   id: z.number().int().positive(),
   email: z.string().trim().toLowerCase().email(),
-  profile: z.string().min(8).max(64),
+  password: z.string().min(8).max(64),
 })
 
 export const userInsertSchema = userSchema.omit({ id: true })

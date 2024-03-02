@@ -6,26 +6,26 @@ const db = createDatabase()
 const userRepository = db.getRepository(User)
 await db.initialize()
 
-it.only('should save a user', async () => {
+it('should save a user', async () => {
   const user = fakeUser()
   await userRepository.save({
     email: user.email,
-    profile: user.profile,
+    password: user.password,
   })
   const savedUser = (await userRepository.findOneOrFail({
     select: {
       id: true,
       email: true,
-      profile: true,
+      password: true,
     },
     where: {
       email: user.email,
     },
-  })) as Pick<User, 'id' | 'email' | 'profile'>
+  })) as Pick<User, 'id' | 'email' | 'password'>
 
   expect(savedUser).toEqual({
     id: expect.any(Number),
     email: user.email,
-    profile: user.profile,
+    password: user.password,
   })
 })

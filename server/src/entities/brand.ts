@@ -20,8 +20,6 @@ export class Brand {
 
   @OneToMany(() => Pizza, (pizza) => pizza.brand)
   pizzas: Pizza[]
-  // @OneToMany(() => Pizza, (pizza) => pizza.brand, { cascade: ['insert'] })
-  // pizzas: Pizza[]
 
   @ManyToOne(() => Country, (country) => country.brands, {
     cascade: ['insert'],

@@ -9,7 +9,9 @@ await db.initialize()
 
 it('should save a country', async () => {
   const country = fakeCountry()
+
   await countryRepository.save(country)
+
   const createdCountry = (await countryRepository.findOneOrFail({
     select: {
       id: true,
@@ -46,12 +48,6 @@ it.only('should save a country with brand relation', async () => {
     },
     relations: ['brands'],
   })) as Pick<Country, 'brands'>
-
-  console.log({
-    countries: await countryRepository.find({
-      relations: ['brands'],
-    }),
-  })
 
   expect(savedCountry.brands).toBeDefined()
   expect(savedCountry.brands).toHaveLength(1)
