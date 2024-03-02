@@ -1,11 +1,9 @@
-import { createDatabase } from '@server/database'
+import { createTestDatabase } from '@tests/utils/database'
 import { Country, Brand } from '..'
 import { fakeBrand, fakeCountry } from './fakes'
 
-const db = createDatabase()
+const db = await createTestDatabase()
 const countryRepository = db.getRepository(Country)
-
-await db.initialize()
 
 it('should save a country', async () => {
   const country = fakeCountry()

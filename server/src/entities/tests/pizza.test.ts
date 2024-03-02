@@ -1,10 +1,9 @@
-import { createDatabase } from '@server/database'
+import { createTestDatabase } from '@tests/utils/database'
 import { Rating, Brand, Pizza, User, Country } from '..'
 import { fakeBrand, fakeUser } from './fakes'
 
-const db = createDatabase()
+const db = await createTestDatabase()
 const pizzaRepository = db.getRepository(Pizza)
-await db.initialize()
 
 const mockUser = fakeUser()
 const mockBrand = fakeBrand()

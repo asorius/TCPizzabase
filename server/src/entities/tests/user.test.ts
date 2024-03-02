@@ -1,10 +1,9 @@
-import { createDatabase } from '@server/database'
+import { createTestDatabase } from '@tests/utils/database'
 import { User } from '..'
 import { fakeUser } from './fakes'
 
-const db = createDatabase()
+const db = await createTestDatabase()
 const userRepository = db.getRepository(User)
-await db.initialize()
 
 it('should save a user', async () => {
   const user = fakeUser()

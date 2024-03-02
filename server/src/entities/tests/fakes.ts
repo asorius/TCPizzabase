@@ -10,7 +10,7 @@ const randomId = () => random.integer({ min: 1, max: 2147483647 })
 export const fakeUser = <T extends Partial<User>>(overrides: T = {} as T) => ({
   id: randomId(),
   email: random.email(),
-  password: 'password/123!',
+  password: random.string(),
   ...overrides,
 })
 
