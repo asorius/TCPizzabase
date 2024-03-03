@@ -4,49 +4,50 @@ import { fakeBrand, fakeCountry } from './fakes'
 
 const db = await createTestDatabase()
 const countryRepository = db.getRepository(Country)
+describe('Country relations', () => {
+  it('should save a country', async () => {
+    const country = fakeCountry()
 
-it('should save a country', async () => {
-  const country = fakeCountry()
+    await countryRepository.save(country)
 
-  await countryRepository.save(country)
+    const createdCountry = (await countryRepository.findOneOrFail({
+      select: {
+        id: true,
+        name: true,
+      },
+      where: {
+        name: country.name,
+      },
+    })) as Pick<Country, 'id' | 'name'>
 
-  const createdCountry = (await countryRepository.findOneOrFail({
-    select: {
-      id: true,
-      name: true,
-    },
-    where: {
+    expect(createdCountry).toEqual({
+      id: expect.any(Number),
       name: country.name,
-    },
-  })) as Pick<Country, 'id' | 'name'>
-
-  expect(createdCountry).toEqual({
-    id: expect.any(Number),
-    name: country.name,
+    })
   })
-})
-it.only('should save a country with brand relation', async () => {
-  const mockBrand = fakeBrand()
+  it('should save a country with brand relation', async () => {
+    const mockBrand = fakeBrand()
 
-  const mockCountry = fakeCountry()
+    const mockCountry = fakeCountry()
 
-  const country = new Country()
-  country.name = mockCountry.name
+    const country = new Country()
+    country.name = mockCountry.name
 
-  const brand = new Brand()
-  brand.title = mockBrand.title
+    const brand = new Brand()
+    brand.title = mockBrand.title
 
-  country.brands = [brand]
+    country.brands = [brand]
 
-  await countryRepository.save(country)
+    await countryRepository.save(country)
 
-  const savedCountry = (await countryRepository.findOneOrFail({
-    where: {
-      name: mockCountry.name,
-    },
-    relations: ['brands'],
-  })) as Pick<Country, 'brands'>
+    const savedCountry = (await countryRepository.findOneOrFail({
+      where: {
+        name: mockCountry.name,
+      },
+      relations: ['brands'],
+    })) as Pick<Country, 'brands'>
 
-  expect(savedCountry.brands).toBeDefined()
-  expect(savedCountry.brands).toHaveLength(1)
+    expect(savedCountry.brands).toBeDefined()
+    expect(savedCountry.brands).toHaveLength(1)
+  })
 })

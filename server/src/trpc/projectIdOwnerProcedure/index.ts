@@ -1,34 +1,35 @@
 import { TRPCError } from '@trpc/server'
 import z from 'zod'
-import { Project } from '@server/entities'
+import { Pizza } from '@server/entities'
 import { authenticatedProcedure } from '@server/trpc/authenticatedProcedure'
 import provideRepos from '../provideRepos'
 
-export const projectIdOwnerProcedure = authenticatedProcedure
-  .use(provideRepos({ Project }))
+export const pizzaIdOwnerProcedure = authenticatedProcedure
+  .use(provideRepos({ Pizza }))
   .input(
     z.object({
-      projectId: z.number(),
+      pizzaId: z.number(),
     })
   )
-  .use(async ({ input: { projectId }, ctx: { authUser, repos }, next }) => {
-    const project = await repos.Project.findOne({
+  .use(async ({ input: { pizzaId }, ctx: { authUser, repos }, next }) => {
+    const pizza = await repos.Pizza.findOne({
       select: {
-        userId: true,
+        user: { id: true },
       },
       where: {
-        id: projectId,
+        id: pizzaId,
       },
+      relations: ['user'],
     })
 
-    if (!project) {
+    if (!pizza) {
       throw new TRPCError({
         code: 'NOT_FOUND',
         message: 'Project not found',
       })
     }
 
-    if (project.userId !== authUser.id) {
+    if (pizza.user.id !== authUser.id) {
       throw new TRPCError({
         code: 'UNAUTHORIZED',
         message: 'Project does not belong to the user',

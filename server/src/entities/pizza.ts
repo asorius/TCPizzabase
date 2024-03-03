@@ -27,7 +27,6 @@ export class Pizza {
 
   @OneToMany(() => Rating, (rating) => rating.pizza, {
     cascade: ['insert'],
-    onDelete: 'CASCADE',
   })
   ratings: Rating[]
 }
@@ -55,7 +54,7 @@ export type PizzaInsert = z.infer<typeof pizzaInsertSchema>
 
 // each brand belongs to a country(multiple)
 
-// pizzas can should be able to be filtered by name, brand, or country by the client
+// pizzas should be able to be filtered by name, brand, or country by the client
 
 // user can: sign up, login, see pizzas with ratings
 // if logged in user can: add new pizza with a rating, or add their rating to already existing pizza

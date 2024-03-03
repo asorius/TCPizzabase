@@ -15,7 +15,9 @@ export class Rating {
   @ManyToOne(() => User, (user) => user.ratings, { cascade: ['insert'] })
   user: User
 
-  @ManyToOne(() => Pizza, (pizza) => pizza.ratings)
+  @ManyToOne(() => Pizza, (pizza) => pizza.ratings, {
+    onDelete: 'CASCADE',
+  })
   pizza: Pizza
 }
 

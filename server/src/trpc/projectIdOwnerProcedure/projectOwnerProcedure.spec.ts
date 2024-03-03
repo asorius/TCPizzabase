@@ -12,11 +12,11 @@ const routes = router({
 const db = await createTestDatabase()
 const [
   {
-    pizzas: [projectOne],
+    pizzas: [pizzaOne],
     ...userOne
   },
   {
-    pizzas: [projectTwo],
+    pizzas: [pizzaTwo],
   },
 ] = await db.getRepository(User).save([
   fakeUser({
@@ -29,32 +29,32 @@ const [
 
 const authenticated = routes.createCaller(authContext({ db }, userOne))
 
-it('should pass if project belongs to the user', async () => {
-  const response = await authenticated.testCall({ projectId: projectOne.id })
+it.only('should pass if project belongs to the user', async () => {
+  const response = await authenticated.testCall({ pizzaId: pizzaOne.id })
 
   expect(response).toEqual('passed')
 })
 
-it('should throw an error if projectId is not provided', async () => {
+it('should throw an error if pizzaId is not provided', async () => {
   // casting to any to allow calling without type safe input
-  await expect((authenticated.testCall as any)({})).rejects.toThrow(/project/i)
+  await expect((authenticated.testCall as any)({})).rejects.toThrow(/pizza/i)
 })
 
-it('should throw an error if user provides a non-existing projectId', async () => {
+it('should throw an error if user provides a non-existing pizzaId', async () => {
   // casting to any to allow calling without type safe input
   await expect(
-    (authenticated.testCall as any)({ projectId: 999 })
-  ).rejects.toThrow(/project/i)
+    (authenticated.testCall as any)({ pizzaId: 999 })
+  ).rejects.toThrow(/pizza/i)
 })
 
-it('should throw an error if user provides null projectId', async () => {
+it('should throw an error if user provides null pizzaId', async () => {
   await expect(
-    authenticated.testCall({ projectId: null as any })
-  ).rejects.toThrow(/project/i)
+    authenticated.testCall({ pizzaId: null as any })
+  ).rejects.toThrow(/pizza/i)
 })
 
 it('should throw an error if project does not belong to the user', async () => {
   await expect(
-    authenticated.testCall({ projectId: projectTwo.id })
-  ).rejects.toThrow(/project/i)
+    authenticated.testCall({ pizzaId: pizzaTwo.id })
+  ).rejects.toThrow(/pizza/i)
 })
