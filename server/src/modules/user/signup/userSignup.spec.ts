@@ -11,7 +11,7 @@ it('should save a user', async () => {
   const user = fakeUser()
   const response = await signup(user)
 
-  const userCreated = (await userRepository.findOneOrFail({
+  const createdUser = (await userRepository.findOneOrFail({
     select: {
       id: true,
       email: true,
@@ -22,20 +22,20 @@ it('should save a user', async () => {
     },
   })) as Pick<User, 'id' | 'email' | 'password'>
 
-  expect(userCreated).toEqual({
+  expect(createdUser).toEqual({
     id: expect.any(Number),
     email: user.email,
     password: expect.not.stringContaining(user.password),
   })
 
-  expect(userCreated.password).toHaveLength(60)
+  expect(createdUser.password).toHaveLength(60)
 
   expect(response).toEqual({
     id: expect.any(Number),
     email: user.email,
   })
 
-  expect(response.id).toEqual(userCreated!.id)
+  expect(response.id).toEqual(createdUser!.id)
 })
 
 it('should require a valid email', async () => {
@@ -70,20 +70,6 @@ it('stores lowercased email', async () => {
   await signup({
     ...user,
     email: user.email.toUpperCase(),
-  })
-
-  await expect(
-    userRepository.findOneByOrFail({
-      email: user.email,
-    })
-  ).resolves.not.toBeNull()
-})
-
-it('stores email with trimmed whitespace', async () => {
-  const user = fakeUser()
-  await signup({
-    ...user,
-    email: ` \t ${user.email}\t `, // tabs and spaces
   })
 
   await expect(

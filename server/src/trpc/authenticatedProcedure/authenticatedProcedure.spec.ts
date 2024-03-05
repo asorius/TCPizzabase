@@ -18,7 +18,6 @@ vi.mock('jsonwebtoken', () => ({
   },
 }))
 
-// we do not need a database for this test
 const db = {} as any
 const authenticated = routes.createCaller(authContext({ db }))
 

@@ -1,4 +1,4 @@
-import { Project, type ProjectBare } from '@server/entities/project'
+import { Pizza, type PizzaBare } from '@server/entities/pizza'
 import { authenticatedProcedure } from '@server/trpc/authenticatedProcedure'
 
 export default authenticatedProcedure.query(
@@ -12,11 +12,16 @@ export default authenticatedProcedure.query(
     // but they would be stripped out before being sent to the client.
     // Just in case, there is a test assertion to check if the
     // user or bugs are returned (they should not be).
-    const projects = (await db.getRepository(Project).find({
-      where: { userId },
+    const pizzas = (await db.getRepository(Pizza).find({
+      where: {
+        user: {
+          id: userId,
+        },
+      },
+      relations: ['user'],
       order: { id: 'ASC' },
-    })) as ProjectBare[]
+    })) as PizzaBare[]
 
-    return projects
+    return pizzas
   }
 )

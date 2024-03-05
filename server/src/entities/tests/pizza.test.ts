@@ -1,5 +1,5 @@
 import { createTestDatabase } from '@tests/utils/database'
-import { Rating, Brand, Pizza, User } from '..'
+import { Image, Brand, Pizza, User } from '..'
 import { fakeBrand, fakeUser } from './fakes'
 
 const db = await createTestDatabase()
@@ -53,29 +53,33 @@ describe('Pizza relations', () => {
       title: mockBrand.title,
     })
   })
-  it('should assign ratings to a pizza', async () => {
+  it('should assign images to a pizza', async () => {
     const pizza = new Pizza()
     pizza.name = 'Test Pizza'
 
-    // Create related ratings
-    const rating1 = new Rating()
-    rating1.rating = 5
-    rating1.pizza = pizza
+    // Create related images
+    const image = new Image()
+    image.source = 'url'
+    image.pizza = pizza
+    image.rating = 5
 
-    const rating2 = new Rating()
-    rating2.rating = 4
-    rating2.pizza = pizza
+    const image2 = new Image()
+    image2.source = 'url'
+    image2.pizza = pizza
+    image2.rating = 4
 
     // Add ratings
-    pizza.ratings = [rating1, rating2]
+    pizza.images = [image, image2]
 
     await pizzaRepository.save(pizza)
 
     const savedPizza = await pizzaRepository.findOne({
       where: { id: pizza.id },
-      relations: ['ratings'],
+      relations: ['images'],
     })
+    const storedImages = await db.getRepository(Image).find()
     expect(savedPizza).toBeDefined()
-    expect(savedPizza?.ratings).toHaveLength(2)
+    expect(savedPizza?.images).toHaveLength(2)
+    expect(storedImages).toHaveLength(2)
   })
 })

@@ -8,7 +8,7 @@ import {
 } from 'typeorm'
 import { z } from 'zod'
 import { Pizza } from './pizza'
-import { Rating } from './rating'
+import { Image } from './image'
 
 @Entity()
 export class User {
@@ -25,11 +25,11 @@ export class User {
   @OneToMany(() => Pizza, (pizza) => pizza.user)
   pizzas: Pizza[]
 
-  @OneToMany(() => Rating, (rating) => rating.user)
-  ratings: Rating[]
+  @OneToMany(() => Image, (image) => image.user)
+  images: Image[]
 }
 
-export type UserBare = Omit<User, 'pizzas' | 'ratings'>
+export type UserBare = Omit<User, 'pizzas' | 'images'>
 
 export const userSchema = validates<UserBare>().with({
   id: z.number().int().positive(),

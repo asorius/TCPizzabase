@@ -13,12 +13,12 @@ export default publicProcedure
     })
   )
   .mutation(async ({ input: { email, password }, ctx: { db } }) => {
-    const hash = await bcrypt.hash(password, config.auth.passwordCost)
+    const hashedPassword = await bcrypt.hash(password, config.auth.passwordCost)
 
     try {
       const user = await db.getRepository(User).save({
         email,
-        password: hash,
+        password: hashedPassword,
       })
 
       return {
@@ -27,11 +27,6 @@ export default publicProcedure
       }
     } catch (error) {
       if (!(error instanceof Error)) {
-        // We would generally add a more pretty message here while
-        // passing along the real error as the error cause.
-        // Then, at the final error handler we would log the error
-        // to the server logs and then strip out the system error
-        // cause before sending the pretty/generic error to the client.
         throw error
       }
 

@@ -1,11 +1,11 @@
 import { router } from '../trpc'
-import bug from './bug'
-import project from './project'
+// import bug from './bug'
+import pizza from './pizza'
 import user from './user'
 
 export const appRouter = router({
-  bug,
-  project,
+  // bug,
+  pizza,
   user,
 })
 

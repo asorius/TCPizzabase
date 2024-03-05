@@ -9,7 +9,7 @@ import {
 import { z } from 'zod'
 import { User } from './user'
 import { Brand } from './brand'
-import { Rating } from './rating'
+import { Image } from './image'
 
 @Entity()
 export class Pizza {
@@ -25,17 +25,16 @@ export class Pizza {
   @ManyToOne(() => Brand, (brand) => brand.pizzas, { cascade: ['insert'] })
   brand: Brand
 
-  @OneToMany(() => Rating, (rating) => rating.pizza, {
+  @OneToMany(() => Image, (image) => image.pizza, {
     cascade: ['insert'],
   })
-  ratings: Rating[]
+  images: Image[]
 }
 
-export type PizzaBare = Omit<Pizza, 'user' | 'brand' | 'ratings'>
+export type PizzaBare = Omit<Pizza, 'user' | 'brand' | 'images'>
 
 export const pizzaSchema = validates<PizzaBare>().with({
   id: z.number().int().positive(),
-  // userId: z.number().positive(),
   name: z
     .string()
     .trim()
@@ -43,7 +42,13 @@ export const pizzaSchema = validates<PizzaBare>().with({
     .max(100),
 })
 
-export const pizzaInsertSchema = pizzaSchema.omit({ id: true })
+export const pizzaInsertSchema = z.object({
+  name: z.string(),
+  brand: z.string(),
+  country: z.string(),
+  imageSource: z.string(),
+  rating: z.number().positive().min(1).max(10),
+})
 
 export type PizzaInsert = z.infer<typeof pizzaInsertSchema>
 
