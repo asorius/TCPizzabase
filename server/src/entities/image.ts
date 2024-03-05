@@ -18,9 +18,7 @@ export class Image {
   @ManyToOne(() => User, (user) => user.images, { cascade: ['insert'] })
   user: User
 
-  @ManyToOne(() => Pizza, (pizza) => pizza.images, {
-    onDelete: 'CASCADE',
-  })
+  @ManyToOne(() => Pizza, (pizza) => pizza.images)
   pizza: Pizza
 }
 

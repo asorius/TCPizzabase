@@ -4,31 +4,21 @@ import { fakePizza, fakeUser } from '@server/entities/tests/fakes'
 import { createTestDatabase } from '@tests/utils/database'
 import router from '..'
 
-it.skip('should return a list of projects', async () => {
+it('should return a list of pizzas', async () => {
   const db = await createTestDatabase()
-
-  // a pair of users and projects to make sure we do not return other users' projects
-  const [user, userOther] = await db
+  const [user, user2] = await db
     .getRepository(User)
     .save([fakeUser(), fakeUser()])
 
-  await db
-    .getRepository(Pizza)
-    .save([fakePizza({ user }), fakePizza({ user: userOther })])
+  const mockPizza = fakePizza({ user })
+  // Add one pizza per user
+  await db.getRepository(Pizza).save([fakePizza({ user: user2 }), mockPizza])
 
   const { find } = router.createCaller(authContext({ db }, user))
 
-  // When (ACT)
-  const userProjects = await find()
-
-  // Then (ASSERT)
-  expect(userProjects).toHaveLength(1)
-  expect(userProjects[0]).toMatchObject({
-    id: expect.any(Number),
-    userId: user.id,
-
-    // no relations
-    user: undefined,
-    bugs: undefined,
-  })
+  // ACT
+  const userPizzas = await find()
+  // ASSERT
+  expect(userPizzas).toHaveLength(1)
+  expect(userPizzas[0].name).toEqual(mockPizza.name)
 })

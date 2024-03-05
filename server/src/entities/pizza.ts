@@ -26,7 +26,7 @@ export class Pizza {
   brand: Brand
 
   @OneToMany(() => Image, (image) => image.pizza, {
-    cascade: ['insert'],
+    cascade: ['insert', 'remove'],
   })
   images: Image[]
 }
