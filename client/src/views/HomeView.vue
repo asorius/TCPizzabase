@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import Placeholder from '../components/Placeholder.vue'
+import Main from '../components/Main.vue'
 </script>
 
 <template>
   <main>
-    <Placeholder />
+    <Main />
   </main>
 </template>
