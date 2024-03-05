@@ -5,7 +5,7 @@ import * as serviceAccount from './serviceAccountKey.json'
 
 const app = initializeApp({
   credential: cert(serviceAccount),
-  storageBucket: '<BUCKET_NAME>.appspot.com',
+  storageBucket: 'pizzabase-71be1.appspot.com',
 })
 
 export const bucket = getStorage(app).bucket()
