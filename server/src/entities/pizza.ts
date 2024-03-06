@@ -29,9 +29,12 @@ export class Pizza {
     cascade: ['insert', 'remove'],
   })
   images: Image[]
+
+  @Column({ type: 'timestamptz', nullable: true })
+  created: Date
 }
 
-export type PizzaBare = Omit<Pizza, 'user' | 'brand' | 'images'>
+export type PizzaBare = Omit<Pizza, 'user' | 'brand' | 'images' | 'created'>
 
 export const pizzaSchema = validates<PizzaBare>().with({
   id: z.number().int().positive(),

@@ -9,7 +9,7 @@ export class Image {
   @PrimaryGeneratedColumn('increment')
   id: number
 
-  @Column('numeric', { nullable: false })
+  @Column('numeric')
   rating: Number
 
   @Column('text')
@@ -20,16 +20,19 @@ export class Image {
 
   @ManyToOne(() => Pizza, (pizza) => pizza.images)
   pizza: Pizza
+
+  @Column({ type: 'timestamptz', nullable: true })
+  created: Date
 }
 
-export type RatingBare = Omit<Image, 'user' | 'pizza'>
+export type ImageBare = Omit<Image, 'user' | 'pizza' | 'created'>
 
-export const ratingSchema = validates<RatingBare>().with({
+export const ratingSchema = validates<ImageBare>().with({
   id: z.number().int().positive(),
   rating: z.number().positive().min(0).max(5),
   source: z.string().min(2).max(200),
 })
 
-export const ratingInsertSchema = ratingSchema.omit({ id: true })
+export const imageInsertSchema = ratingSchema.omit({ id: true })
 
-export type ProjectInsert = z.infer<typeof ratingInsertSchema>
+export type ImageInsert = z.infer<typeof imageInsertSchema>
