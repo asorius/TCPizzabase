@@ -1,6 +1,6 @@
 ## About
 
-IMDB version of pizzas, world wide, with images and ratings.
+IMDB version of pizzas, world wide, with images and ratings.  
 Users can create multiple pizzas with an image and rating.
 
 Pizzas should be able to be filtered by name, brand, or country by the user.
