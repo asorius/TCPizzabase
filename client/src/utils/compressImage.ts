@@ -5,8 +5,8 @@ export const compressImage = async ({
 }: {
   file: File
   quality: number
-  type: string
-}) => {
+  type?: string
+}): Promise<File | undefined> => {
   // Get as image data
   const imageBitmap = await createImageBitmap(file)
 
@@ -19,11 +19,7 @@ export const compressImage = async ({
     ctx.drawImage(imageBitmap, 0, 0)
 
     // Turn into Blob
-    const blob: any = await new Promise((resolve, reject) => canvas.toBlob(resolve, type, quality))
-    // Turn Blob into File
-
-    return new File([blob], file.name, {
-      type: blob.type
-    })
+    const blob: any = await new Promise((resolve) => canvas.toBlob(resolve, type, quality))
+    return blob
   }
 }

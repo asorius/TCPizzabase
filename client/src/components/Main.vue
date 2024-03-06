@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 import { ref } from 'vue'
 import { trpc } from '../trpc'
@@ -6,25 +7,40 @@ const pizza = ref('')
 const brand = ref('')
 const country = ref('')
 const rating = ref(0)
-const changeHandler2 = async (event: Event) => {
-  if (event.target && event.target.files) {
-    const file = event.target.files[0]
+const error = ref('')
+const loading = ref(false)
+const imageUrl = ref('')
+const imageUploadHandler = async (event: Event) => {
+  const target = event.target as HTMLInputElement
+  if (target && target.files) {
+    const file = target.files[0]
     console.log(file.size)
     if (!file.type.startsWith('image')) {
-      console.log('no image type')
+      console.log('File is not an image')
       return
     }
-    const img = await compressImage({ file, quality: 0.3 })
-    console.log(img.size)
-    // await trpc.user.login.mutate(userLogin)
+    const imageBlob = await compressImage({ file, quality: 0.3 })
+    if (!imageBlob) {
+      error.value = 'Failed to compress image, try again'
+      return
+    }
+    console.log({ originalSize: file.size, compressedSize: imageBlob.size })
     const reader = new FileReader()
     reader.onloadend = async () => {
-      const base64String = reader.result.replace(/^data:(.*;base64,)?/, '')
-      // Now you can send `base64String` to the server using tRPC
-      const response = await trpc.cloud.upload.mutate({ img: base64String, name: file.name })
-      console.log({ response })
+      loading.value = true
+      if (reader.result) {
+        const raw = reader.result as string
+        // Remove base64 prefix
+        const base64Image = raw.replace(/^data:(.*;base64,)?/, '')
+        // Send `base64Image` to the server using tRPC
+        const response = await trpc.fileStorage.upload.mutate({ base64Image, name: file.name })
+        loading.value = false
+        if (response) {
+          imageUrl.value = response
+        }
+      }
     }
-    reader.readAsDataURL(img)
+    reader.readAsDataURL(imageBlob)
   }
 }
 
@@ -36,31 +52,35 @@ const handleSubmit = (event: Event) => {
 <template>
   <div class="greetings">
     <h1 class="green">Add a pizza</h1>
-    <h3>
-      You've successfully created a project with
-      <a href="https://vitejs.dev/" target="_blank" rel="noopener">Vite</a> +
-      <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue 3</a>. What's next?
-    </h3>
-    <form enctype="multipart/form-data" @submit.prevent="handleSubmit">
-      <input
-        type="file"
-        name="image"
-        id="image"
-        accept="image/*"
-        capture="environment"
-        @change="changeHandler2"
-      />
-      <input type="text" id="pizza" v-model="pizza" />
-      <input type="text" id="brand" v-model="brand" />
-      <input type="text" id="country" v-model="country" />
-      <select v-model="rating" id="rating">
-        <option value="1" default>1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-      </select>
-      <button type="submit">go</button>
-    </form>
+    <h3>Placeholder</h3>
+    <div v-if="error">{{ error }}</div>
+    <div>
+      <form enctype="multipart/form-data" @submit.prevent="handleSubmit">
+        <input
+          type="file"
+          name="image"
+          id="image"
+          accept="image/*"
+          capture="environment"
+          @change="imageUploadHandler"
+        />
+        <input type="text" id="pizza" v-model="pizza" placeholder="Pizza name" />
+        <input type="text" id="brand" v-model="brand" placeholder="Brand" />
+        <input type="text" id="country" v-model="country" placeholder="Country" />
+        <select v-model="rating" id="rating">
+          <option disabled value="">Rate this pizza</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+        <button type="submit">Submit</button>
+      </form>
+      <div v-if="loading"><h2>Uploading image...</h2></div>
+      <div v-else>
+        <img :src="imageUrl" alt="" />
+      </div>
+    </div>
   </div>
 </template>

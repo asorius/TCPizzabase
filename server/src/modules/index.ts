@@ -1,12 +1,12 @@
 import { router } from '../trpc'
 import pizza from './pizza'
 import user from './user'
-import cloud from './cloud'
+import fileStorage from './fileStorage'
 
 export const appRouter = router({
   pizza,
   user,
-  cloud,
+  fileStorage,
 })
 
 export type AppRouter = typeof appRouter
