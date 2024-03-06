@@ -8,6 +8,7 @@ const pizzaRepository = db.getRepository(Pizza)
 describe('Pizza relations', () => {
   it('should assign pizza to a user', async () => {
     const mockUser = fakeUser()
+
     const user = new User()
 
     user.email = mockUser.email
@@ -16,6 +17,7 @@ describe('Pizza relations', () => {
     const pizza = new Pizza()
     pizza.name = 'Test Pizza'
     pizza.user = user
+
     await pizzaRepository.save(pizza)
 
     const savedPizza = await pizzaRepository.findOne({
@@ -68,7 +70,7 @@ describe('Pizza relations', () => {
     image2.pizza = pizza
     image2.rating = 4
 
-    // Add ratings
+    // Add images
     pizza.images = [image, image2]
 
     await pizzaRepository.save(pizza)

@@ -4,6 +4,7 @@ import { fakeBrand, fakeCountry } from './fakes'
 
 const db = await createTestDatabase()
 const countryRepository = db.getRepository(Country)
+
 describe('Country relations', () => {
   it('should save a country', async () => {
     const country = fakeCountry()

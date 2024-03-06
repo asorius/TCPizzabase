@@ -7,18 +7,15 @@ import * as entities from '../entities'
 export function createDatabase(
   options: Partial<DataSourceOptions | { type: 'pg-mem' }> = { type: 'pg-mem' }
 ) {
-  // Run with an in-memory database.
   if (options.type === 'pg-mem') {
     return createMemoryDatabase()
   }
 
   return new DataSource({
-    // defaults
     entities,
     migrations: [relative('./migrations/**/*.ts')],
     namingStrategy: new SnakeNamingStrategy(),
 
-    // overrides
     ...options,
   } as any)
 }

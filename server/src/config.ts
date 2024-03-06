@@ -44,6 +44,9 @@ const schema = z
       logging: z.preprocess(coerceBoolean, z.boolean().default(isDevTest)),
       synchronize: z.preprocess(coerceBoolean, z.boolean().default(isDevTest)),
     }),
+    firebase: z.object({
+      bucket: z.string(),
+    }),
   })
   .readonly()
 
@@ -67,6 +70,9 @@ const config = schema.parse({
     password: env.DB_PASSWORD,
     logging: env.DB_LOGGING,
     synchronize: env.DB_SYNC,
+  },
+  firebase: {
+    bucket: env.FIREBASE_STORAGE_BUCKET,
   },
 })
 

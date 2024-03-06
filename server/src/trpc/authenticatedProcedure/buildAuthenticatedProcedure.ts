@@ -10,7 +10,6 @@ const tokenSchema = z.object({
   user: authUserSchema,
 })
 
-// An example with dependency injection.
 export function buildAuthenticatedProcedure(verify: VerifyToken) {
   function getUserFromToken(token: string) {
     try {

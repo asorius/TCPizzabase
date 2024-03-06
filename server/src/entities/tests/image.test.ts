@@ -8,6 +8,7 @@ const imageRepository = db.getRepository(Image)
 it('should add images for multiple pizzas', async () => {
   const pizza1 = new Pizza()
   pizza1.name = 'Test Pizza'
+
   const pizza2 = new Pizza()
   pizza2.name = 'Test Pizza2'
 
@@ -32,7 +33,8 @@ it('should add images for multiple pizzas', async () => {
   await pizzaRepository.save(pizza1)
   await pizzaRepository.save(pizza2)
 
-  const images = await imageRepository.find({ relations: ['pizza'] })
+  const imageList = await imageRepository.find({ relations: ['pizza'] })
+
   const imagesForPizza2 = await imageRepository.find({
     where: {
       pizza: {
@@ -42,6 +44,6 @@ it('should add images for multiple pizzas', async () => {
     relations: ['pizza'],
   })
 
-  expect(images).toHaveLength(3)
+  expect(imageList).toHaveLength(3)
   expect(imagesForPizza2).toHaveLength(2)
 })

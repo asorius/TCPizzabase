@@ -7,6 +7,7 @@ const userRepository = db.getRepository(User)
 
 it('should save a user', async () => {
   const user = fakeUser()
+
   await userRepository.save({
     email: user.email,
     password: user.password,

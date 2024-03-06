@@ -54,16 +54,3 @@ export const pizzaInsertSchema = z.object({
 })
 
 export type PizzaInsert = z.infer<typeof pizzaInsertSchema>
-
-// user can create multiple pizzas with added rating
-
-// each pizza belongs to a brand
-// each pizza has a rating by a user
-
-// each brand belongs to a country(multiple)
-
-// pizzas should be able to be filtered by name, brand, or country by the client
-
-// user can: sign up, login, see pizzas with ratings
-// if logged in user can: add new pizza with a rating, or add their rating to already existing pizza
-// if user is admin, they can: delete pizzas, delete brands (country should automaticaly delete itself if there are no brands in it)
