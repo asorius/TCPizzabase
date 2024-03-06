@@ -9,5 +9,8 @@
   ],
   "dependencies": {
     "@trpc/client": "^10.45.1"
+  },
+  "devDependencies": {
+    "@types/chance": "^1.1.6"
   }
 }
