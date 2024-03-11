@@ -12,9 +12,6 @@ export default authenticatedProcedure
         id: authUser.id,
       },
     })
-    // rating brand country must be provided as strings, but schema is not set like that
-    // HOW TO HANDLE IF PASSED IN COUNTRY AND BRAND ALREADY EXIST? WHEN TO CREATE NEW BRAND OR COUNTRY??
-
     if (!user) {
       throw new Error('No user found')
     }
@@ -51,10 +48,13 @@ export default authenticatedProcedure
     pizza.brand = brand
     pizza.images = [image]
 
-    // Maybe not needed, not sure
+    // Relate image to pizza
     image.pizza = pizza
 
     const createdPizza = await db.getRepository(Pizza).save(pizza)
 
+    if (!createdPizza) {
+      throw new Error('Failed to save new pizza')
+    }
     return createdPizza
   })

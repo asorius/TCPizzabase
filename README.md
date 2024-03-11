@@ -1,18 +1,13 @@
 ## About
 
-IMDB version of pizzas, world wide, with images and ratings.  
-Users can create multiple pizzas with an image and rating.
+IMDB version of pizzas with user provided images and ratings.  
+In addition of rating, user must provide an image of the pizza.
+The goal of the app is to see actual how pizzas look in reality, compare them to similar pizzas from different brands in various countries.
 
 Pizzas should be able to be filtered by name, brand, or country by the user.
 
-Anonymous user can: sign up, login, see pizzas with ratings
+Anonymous user can: sign up, login, see pizzas with images ratings
 Logged in user can: add new pizza with a rating and image, or add their image and rating to already existing pizza
-
-To be implemented:
-Whole client side code.
-Admin role and actions:
--If user is admin, they should be able to: delete pizzas, brands, images
-Ability for user to delete their own uploaded image.
 
 ## Setup
 

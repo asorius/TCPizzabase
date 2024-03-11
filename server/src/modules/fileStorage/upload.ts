@@ -8,9 +8,14 @@ import { publicProcedure } from '../../trpc'
 export default publicProcedure
   .input(z.object({ base64Image: z.string(), name: z.string() }))
   .mutation(async ({ input }) => {
-    const imageBuffer = Buffer.from(input.base64Image, 'base64')
+    try {
+      const imageBuffer = Buffer.from(input.base64Image, 'base64')
 
-    const res = await uploadImage({ file: imageBuffer, name: input.name })
+      const res = await uploadImage({ file: imageBuffer, name: input.name })
 
-    return res
+      return res
+    } catch (error) {
+      console.log(error)
+      throw new Error('Upload failed')
+    }
   })
