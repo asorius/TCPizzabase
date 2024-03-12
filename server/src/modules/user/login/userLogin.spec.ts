@@ -1,4 +1,4 @@
-import usersRouter from '..'
+import { createCaller } from '@server/modules'
 
 const userSeed = {
   id: 12345,
@@ -12,8 +12,8 @@ const db = {
       email === userSeed.email ? userSeed : null,
   }),
 }
-
-const { login } = usersRouter.createCaller({ db } as any)
+const userRoute = createCaller({ db } as any).user
+const { login } = userRoute
 
 const PASSWORD_CORRECT = 'password.123'
 

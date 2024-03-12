@@ -1,4 +1,4 @@
-import { router } from '../trpc'
+import { router, createCallerFactory } from '../trpc'
 import pizza from './pizza'
 import user from './user'
 import fileStorage from './fileStorage'
@@ -10,3 +10,4 @@ export const appRouter = router({
 })
 
 export type AppRouter = typeof appRouter
+export const createCaller = createCallerFactory(appRouter)

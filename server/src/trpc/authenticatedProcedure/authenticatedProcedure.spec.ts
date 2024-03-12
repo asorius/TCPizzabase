@@ -2,7 +2,10 @@ import { authContext, requestContext } from '@tests/utils/context'
 import { router } from '..'
 import { authenticatedProcedure } from '.'
 
-const routes = router({
+// For createCaller deprecation in this case where mockRoutes is not passed to the main appRouter
+// the main caller would not have reference to testCall? Don't know how to deal with this.
+
+const mockRoutes = router({
   testCall: authenticatedProcedure.query(() => 'passed'),
 })
 
@@ -19,7 +22,7 @@ vi.mock('jsonwebtoken', () => ({
 }))
 
 const db = {} as any
-const authenticated = routes.createCaller(authContext({ db }))
+const authenticated = mockRoutes.createCaller(authContext({ db }))
 
 it('should pass if user is already authenticated', async () => {
   const response = await authenticated.testCall()
@@ -28,7 +31,7 @@ it('should pass if user is already authenticated', async () => {
 })
 
 it('should pass if user provides a valid token', async () => {
-  const usingValidToken = routes.createCaller({
+  const usingValidToken = mockRoutes.createCaller({
     db,
     req: {
       header: () => `Bearer ${VALID_TOKEN}`,
@@ -41,7 +44,7 @@ it('should pass if user provides a valid token', async () => {
 })
 
 it('should throw an error if user is not logged in', async () => {
-  const unauthenticated = routes.createCaller(requestContext({ db }))
+  const unauthenticated = mockRoutes.createCaller(requestContext({ db }))
 
   await expect(unauthenticated.testCall()).rejects.toThrow(
     // any authentication-like error
@@ -50,7 +53,7 @@ it('should throw an error if user is not logged in', async () => {
 })
 
 it('should throw an error if it is run without access to headers', async () => {
-  const invalidToken = routes.createCaller(
+  const invalidToken = mockRoutes.createCaller(
     requestContext({
       db,
       req: undefined as any,
@@ -61,7 +64,7 @@ it('should throw an error if it is run without access to headers', async () => {
 })
 
 it('should throw an error if user provides invalid token', async () => {
-  const invalidToken = routes.createCaller(
+  const invalidToken = mockRoutes.createCaller(
     requestContext({
       db,
       req: {
