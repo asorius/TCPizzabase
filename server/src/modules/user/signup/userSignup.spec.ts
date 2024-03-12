@@ -1,11 +1,12 @@
 import { createTestDatabase } from '@tests/utils/database'
 import { User } from '@server/entities'
 import { fakeUser } from '@server/entities/tests/fakes'
-import usersRouter from '..'
+import { createCaller } from '@server/modules'
 
 const db = await createTestDatabase()
 const userRepository = db.getRepository(User)
-const { signup } = usersRouter.createCaller({ db })
+const userRoute = createCaller({ db }).user
+const { signup } = userRoute
 
 it('should save a user', async () => {
   const user = fakeUser()

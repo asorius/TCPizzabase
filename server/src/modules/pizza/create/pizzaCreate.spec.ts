@@ -3,7 +3,7 @@ import { fakeUser } from '@server/entities/tests/fakes'
 import { createTestDatabase } from '@tests/utils/database'
 import { User } from '@server/entities'
 import type { PizzaInsert } from '@server/entities/pizza'
-import pizzaRouter from '..'
+import { createCaller } from '@server/modules'
 
 it('should create a pizza', async () => {
   const db = await createTestDatabase()
@@ -11,7 +11,8 @@ it('should create a pizza', async () => {
   const user = await db
     .getRepository(User)
     .save({ email: mockUser.email, password: mockUser.password })
-  const { create } = pizzaRouter.createCaller(authContext({ db }, user))
+  const pizzaRoute = createCaller(authContext({ db }, user)).pizza
+  const { create } = pizzaRoute
 
   const userInput: PizzaInsert = {
     name: 'Test pizza',
