@@ -12,7 +12,7 @@ export default authenticatedProcedure
     if (!pizza) {
       throw new TRPCError({
         code: 'NOT_FOUND',
-        message: `pizza was not found`,
+        message: `Pizza was not found`,
       })
     }
 

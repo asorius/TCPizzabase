@@ -20,9 +20,8 @@ it('should create a pizza', async () => {
     rating: 5,
     imageSource: 'url',
   }
-  // ACT
+
   const createdPizza = await create(userInput)
-  // ASSERT
 
   expect(createdPizza.name).toEqual(userInput.name)
   expect(createdPizza.user).toEqual(user)

@@ -33,8 +33,8 @@ In development mode:
 
 ```bash
 # automatically restarts the server
-npm run dev
+npm run dev -w server
 
 # server can be started without a database
-npm run dev:mem
+npm run dev:mem -w server
 ```

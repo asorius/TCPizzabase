@@ -11,14 +11,14 @@ it('should return a list of pizzas', async () => {
     .save([fakeUser(), fakeUser()])
 
   const mockPizza = fakePizza({ user })
+
   // Add one pizza per user
   await db.getRepository(Pizza).save([fakePizza({ user: user2 }), mockPizza])
 
   const { find } = router.createCaller(authContext({ db }, user))
 
-  // ACT
   const userPizzas = await find()
-  // ASSERT
+
   expect(userPizzas).toHaveLength(1)
   expect(userPizzas[0].name).toEqual(mockPizza.name)
 })

@@ -1,4 +1,3 @@
-// import { createMockDatabase } from '@tests/utils/database'
 import usersRouter from '..'
 
 const userSeed = {
@@ -7,7 +6,6 @@ const userSeed = {
   password: '$2b$10$sD53fzWIQBjXWfSDzuwmMOyY1ZAygLpRZlLxxPhcNG5r9BFWrNaDC',
 }
 
-// Example using a mocked out db.
 const db = {
   getRepository: () => ({
     findOne: ({ where: { email } }: any) =>
