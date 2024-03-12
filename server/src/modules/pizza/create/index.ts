@@ -56,5 +56,6 @@ export default authenticatedProcedure
     if (!createdPizza) {
       throw new Error('Failed to save new pizza')
     }
+
     return createdPizza
   })
