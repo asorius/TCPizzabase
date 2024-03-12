@@ -6,8 +6,8 @@ The goal of the app is to see actual how pizzas look in reality, compare them to
 
 Pizzas should be able to be filtered by name, brand, or country by the user.
 
-Anonymous user can: sign up, login, see pizzas with images ratings
-Logged in user can: add new pizza with a rating and image, or add their image and rating to already existing pizza
+Anonymous user can: sign up, login, see pizzas with images ratings.
+Logged in user can: add new pizza with a rating and image, or add their image and rating to already existing pizza.
 
 ## Setup
 
