@@ -30,11 +30,14 @@ export class Pizza {
   })
   images: Image[]
 
-  @Column({ type: 'timestamptz', nullable: true })
-  created: Date
+  @Column({
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  createdAt: Date
 }
 
-export type PizzaBare = Omit<Pizza, 'user' | 'brand' | 'images' | 'created'>
+export type PizzaBare = Omit<Pizza, 'user' | 'brand' | 'images' | 'createdAt'>
 
 export const pizzaSchema = validates<PizzaBare>().with({
   id: z.number().int().positive(),

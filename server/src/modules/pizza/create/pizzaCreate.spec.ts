@@ -8,9 +8,11 @@ import { createCaller } from '@server/modules'
 it('should create a pizza', async () => {
   const db = await createTestDatabase()
   const mockUser = fakeUser()
+
   const user = await db
     .getRepository(User)
     .save({ email: mockUser.email, password: mockUser.password })
+
   const pizzaRoute = createCaller(authContext({ db }, user)).pizza
   const { create } = pizzaRoute
 
@@ -23,6 +25,7 @@ it('should create a pizza', async () => {
   }
 
   const createdPizza = await create(userInput)
+
   expect(createdPizza.name).toEqual(userInput.name)
   expect(createdPizza.user).toEqual(user)
   expect(createdPizza.brand.title).toEqual(userInput.brand)

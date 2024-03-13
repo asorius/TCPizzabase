@@ -28,11 +28,14 @@ export class User {
   @OneToMany(() => Image, (image) => image.user)
   images: Image[]
 
-  @Column({ type: 'timestamptz', nullable: true })
-  created: Date
+  @Column({
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  createdAt: Date
 }
 
-export type UserBare = Omit<User, 'pizzas' | 'images' | 'created'>
+export type UserBare = Omit<User, 'pizzas' | 'images' | 'createdAt'>
 
 export const userSchema = validates<UserBare>().with({
   id: z.number().int().positive(),

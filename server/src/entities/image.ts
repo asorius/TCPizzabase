@@ -21,11 +21,14 @@ export class Image {
   @ManyToOne(() => Pizza, (pizza) => pizza.images)
   pizza: Pizza
 
-  @Column({ type: 'timestamptz', nullable: true })
-  created: Date
+  @Column({
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  createdAt: Date
 }
 
-export type ImageBare = Omit<Image, 'user' | 'pizza' | 'created'>
+export type ImageBare = Omit<Image, 'user' | 'pizza' | 'createdAt'>
 
 export const ratingSchema = validates<ImageBare>().with({
   id: z.number().int().positive(),
