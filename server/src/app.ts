@@ -12,7 +12,7 @@ export default function createApp(db: Database) {
   const app = express()
 
   app.use(cors())
-  app.use(express.json())
+  app.use(express.json({ limit: '3mb' }))
 
   // Endpoint for health checks - pinging the server to see if it's alive.
   // This can be used by tests, load balancers, monitoring tools, etc.

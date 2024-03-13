@@ -24,7 +24,10 @@ const imageUploadHandler = async (event: Event) => {
       error.value = 'Failed to compress image, try again'
       return
     }
-    console.log({ originalSize: file.size, compressedSize: imageBlob.size })
+    console.log({
+      originalSize: file.size * 0.0009765625,
+      compressedSize: imageBlob.size * 0.0009765625
+    })
     const reader = new FileReader()
     reader.onloadend = async () => {
       loading.value = true

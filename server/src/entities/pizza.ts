@@ -32,6 +32,7 @@ export class Pizza {
 
   @Column({
     type: 'timestamptz',
+    nullable: true,
     default: () => 'CURRENT_TIMESTAMP',
   })
   createdAt: Date

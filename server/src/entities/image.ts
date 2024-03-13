@@ -23,6 +23,7 @@ export class Image {
 
   @Column({
     type: 'timestamptz',
+    nullable: true,
     default: () => 'CURRENT_TIMESTAMP',
   })
   createdAt: Date
