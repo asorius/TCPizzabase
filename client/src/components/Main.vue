@@ -10,7 +10,10 @@ const rating = ref(0)
 const error = ref('')
 const loading = ref(false)
 const imageUrl = ref('')
-const imageUploadHandler = async (event: Event) => {
+const filePath = ref('')
+const message = ref('')
+async function imageUploadHandler(event: Event) {
+  loading.value = true
   const target = event.target as HTMLInputElement
   if (target && target.files) {
     const file = target.files[0]
@@ -30,23 +33,36 @@ const imageUploadHandler = async (event: Event) => {
     })
     const reader = new FileReader()
     reader.onloadend = async () => {
-      loading.value = true
+      message.value = 'Uploading image...'
       if (reader.result) {
         const raw = reader.result as string
         // Remove base64 prefix
         const base64Image = raw.replace(/^data:(.*;base64,)?/, '')
         // Send `base64Image` to the server using tRPC
-        const response = await trpc.fileStorage.upload.mutate({ base64Image, name: file.name })
+        const response = await trpc.fileStorage.uploadImage.mutate({ base64Image, name: file.name })
         loading.value = false
         if (response) {
-          imageUrl.value = response
+          imageUrl.value = response.downloadURL
+          filePath.value = response.filePath
+          loading.value = false
         }
       }
     }
     reader.readAsDataURL(imageBlob)
   }
 }
-
+async function deleteImageHandler(event: Event) {
+  loading.value = true
+  message.value = 'Deleting image...'
+  const response = (await trpc.fileStorage.deleteImage.mutate({ path: filePath.value })) as number
+  console.log({ response })
+  if (response === 204) {
+    imageUrl.value = ''
+    filePath.value = ''
+    message.value = ''
+    loading.value = false
+  }
+}
 const handleSubmit = (event: Event) => {
   console.log(event)
 }
@@ -80,9 +96,12 @@ const handleSubmit = (event: Event) => {
         </select>
         <button type="submit">Submit</button>
       </form>
-      <div v-if="loading"><h2>Uploading image...</h2></div>
+      <div v-if="loading">
+        <h2>{{ message }}</h2>
+      </div>
       <div v-else>
-        <img :src="imageUrl" alt="" />
+        <img :src="imageUrl" alt="" style="display: block; max-width: 20rem" />
+        <button v-if="filePath" @click="deleteImageHandler">Delete</button>
       </div>
     </div>
   </div>

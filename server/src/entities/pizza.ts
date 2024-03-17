@@ -54,6 +54,7 @@ export const pizzaInsertSchema = z.object({
   brand: z.string(),
   country: z.string(),
   imageSource: z.string(),
+  imagePath: z.string(),
   rating: z.number().positive().min(1).max(10),
 })
 

@@ -12,5 +12,5 @@ export default async ({ file, name }: { file: Buffer; name: string }) => {
 
   const downloadURL = await getDownloadURL(bucket.file(filePath))
 
-  return downloadURL
+  return { downloadURL, filePath }
 }

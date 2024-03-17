@@ -15,6 +15,9 @@ export class Image {
   @Column('text')
   source: String
 
+  @Column('text')
+  path: String
+
   @ManyToOne(() => User, (user) => user.images, { cascade: ['insert'] })
   user: User
 
@@ -35,6 +38,7 @@ export const ratingSchema = validates<ImageBare>().with({
   id: z.number().int().positive(),
   rating: z.number().positive().min(0).max(5),
   source: z.string().min(2).max(200),
+  path: z.string().min(2).max(200),
 })
 
 export const imageInsertSchema = ratingSchema.omit({ id: true })

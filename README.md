@@ -7,14 +7,14 @@ The goal of the app is to see actual how pizzas look in reality, compare them to
 Pizzas should be able to be filtered by name, brand, or country by the user.
 
 Anonymous user can: sign up, login, see pizzas with images ratings.
-Logged in user can: add new pizza with a rating and image, or add their image and rating to already existing pizza.
+Logged in user can: add new pizza with a rating and image, or add their own image and rating to already existing pizza.
 
 ## Setup
 
 1. `npm install`
 2. Create a PostgreSQL database, or use an existing one.
 3. Setup `.env` files in `client` and `server` based on `.env.example` files.
-4. Connect your own Firebase app. Add `serviceAccountKey.json` in servers `/firebase` directory.
+4. NOT REQUIRED: To run front-end connect your own Firebase app. Add `serviceAccountKey.json` in servers `/firebase` directory.
 
 ## Tests
 

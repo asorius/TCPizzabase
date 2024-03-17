@@ -11,7 +11,7 @@ const mockPizza = fakePizza({ user })
 const pizzaRoute = createCaller(authContext({ db }, user)).pizza
 
 describe('Updating existing pizza', () => {
-  it('should add an image', async () => {
+  it('should add images', async () => {
     // Add a pizza
     await db.getRepository(Pizza).save(mockPizza)
 
@@ -20,16 +20,25 @@ describe('Updating existing pizza', () => {
       .findOne({ where: { id: mockPizza.id }, relations: ['images', 'user'] })
 
     if (storedPizza) {
-      const result = await pizzaRoute.update({
+      const oneImageInsertion = await pizzaRoute.update({
         pizzaId: storedPizza.id,
         imageUrl: 'newUrl',
+        imagePath: 'images/newUrl',
+      })
+      const twoImageInsertion = await pizzaRoute.update({
+        pizzaId: storedPizza.id,
+        imageUrl: 'newUrl2',
+        imagePath: 'images/newUrl2',
       })
       // Confirm old stored value
       expect(storedPizza.images).toHaveLength(0)
 
       // Check new updated value
-      expect(result.images).toHaveLength(1)
-      expect(result.images[0].source).toEqual('newUrl')
+      expect(oneImageInsertion.images).toHaveLength(1)
+      expect(oneImageInsertion.images[0].source).toEqual('newUrl')
+
+      expect(twoImageInsertion.images).toHaveLength(2)
+      expect(twoImageInsertion.images[1].source).toEqual('newUrl2')
     }
   })
 })

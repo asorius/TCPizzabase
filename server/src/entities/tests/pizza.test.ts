@@ -62,12 +62,16 @@ describe('Pizza relations', () => {
     // Create related images
     const image = new Image()
     image.source = 'url'
+    image.path = 'filepath'
+
     image.pizza = pizza
     image.rating = 5
 
     const image2 = new Image()
     image2.source = 'url'
     image2.pizza = pizza
+    image2.path = 'filepath2'
+
     image2.rating = 4
 
     // Add images

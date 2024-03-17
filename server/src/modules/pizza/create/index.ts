@@ -40,6 +40,7 @@ export default authenticatedProcedure
     image.rating = userInput.rating
     image.user = user
     image.source = userInput.imageSource
+    image.path = userInput.imagePath
 
     // Construct the final Pizza entity with relations
     const pizza = new Pizza()

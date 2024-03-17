@@ -14,17 +14,22 @@ it('should add images for multiple pizzas', async () => {
 
   const image1 = new Image()
   image1.source = 'url'
+  image1.path = 'filepath1'
   image1.pizza = pizza1
   image1.rating = 3
 
   const image2 = new Image()
   image2.source = 'url2'
+  image2.path = 'filepath2'
+
   image2.pizza = pizza2
   image2.rating = 4
 
   const image3 = new Image()
   image3.source = 'url22'
+  image3.path = 'filepath3'
   image3.pizza = pizza2
+
   image3.rating = 7
 
   pizza1.images = [image1]

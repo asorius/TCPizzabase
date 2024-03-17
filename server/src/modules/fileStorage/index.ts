@@ -1,6 +1,8 @@
 import { router } from '@server/trpc'
-import upload from './upload'
+import uploadImage from './upload'
+import deleteImage from './delete'
 
 export default router({
-  upload,
+  uploadImage,
+  deleteImage,
 })

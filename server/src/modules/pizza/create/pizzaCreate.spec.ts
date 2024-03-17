@@ -22,6 +22,7 @@ it('should create a pizza', async () => {
     country: 'new country',
     rating: 5,
     imageSource: 'url',
+    imagePath: 'images/url',
   }
 
   const createdPizza = await create(userInput)
@@ -31,4 +32,5 @@ it('should create a pizza', async () => {
   expect(createdPizza.brand.title).toEqual(userInput.brand)
   expect(createdPizza.images).toHaveLength(1)
   expect(createdPizza.images[0].source).toEqual('url')
+  expect(createdPizza.images[0].path).toEqual('images/url')
 })
