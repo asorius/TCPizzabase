@@ -14,7 +14,8 @@ Logged in user can: add new pizza with a rating and image, or add their own imag
 1. `npm install`
 2. Create a PostgreSQL database, or use an existing one.
 3. Setup `.env` files in `client` and `server` based on `.env.example` files.
-4. NOT REQUIRED: To run front-end connect your own Firebase app. Add `serviceAccountKey.json` in servers `/firebase` directory.
+4. Setup `serviceAccountKey.json` in servers `/firebase` directory with empty object as value `{}`.
+5. NOT REQUIRED: To run front-end connect your own Firebase app. Update `serviceAccountKey.json` file and `.env` `FIREBASE_STORAGE_BUCKET` value.
 
 ## Tests
 
