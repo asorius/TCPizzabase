@@ -45,7 +45,7 @@ export const pizzaSchema = validates<PizzaBare>().with({
   name: z
     .string()
     .trim()
-    .min(5, 'Pizza name must be at least 5 characters long')
+    .min(4, 'Pizza name must be at least 4 characters long')
     .max(100),
 })
 

@@ -34,7 +34,7 @@ export const brandSchema = validates<BrandBare>().with({
   title: z
     .string()
     .trim()
-    .min(5, 'Brand title must be at least 5 characters long')
+    .min(4, 'Brand title must be at least 4 characters long')
     .max(100),
 })
 

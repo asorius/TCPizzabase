@@ -19,7 +19,7 @@ export class User {
   @Column('text')
   email: string
 
-  @Column('text', { unique: true })
+  @Column('text')
   password: string
 
   @OneToMany(() => Pizza, (pizza) => pizza.user)
