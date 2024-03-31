@@ -2,7 +2,7 @@ import { Pizza } from '@server/entities/pizza'
 import { TRPCError } from '@trpc/server'
 import { DataSource } from 'typeorm'
 
-async function filterByBrand({
+async function filterByBoth({
   brand,
   country,
   db,
@@ -33,4 +33,4 @@ async function filterByBrand({
 
   return pizzas
 }
-export default filterByBrand
+export default filterByBoth
