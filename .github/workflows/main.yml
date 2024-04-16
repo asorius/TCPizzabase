@@ -1,0 +1,47 @@
+name: Test
+
+on: push
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      # spin up a database for this job
+      postgres:
+        image: postgres:16.1-alpine
+        env:
+          # Postgres service allows creating a user and a database
+          # if we provide some specific environment variables to it.
+          # You can find out more about these environment variables
+          # by visiting https://hub.docker.com/_/postgres and looking
+          # at the "Environment Variables" section.
+          # No need to overthink what is going on here just yet. We
+          # will spend more time on Docker later.
+          POSTGRES_USER: turing
+          POSTGRES_PASSWORD: turing
+          POSTGRES_DB: testdb
+        ports:
+          # We will need to connect to it somehow. We will use the default
+          # Postgres port 5432.
+          - 5432:5432
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.19.0'
+          cache: 'npm'
+      #
+      - name: Install dependencies
+        run: npm ci
+
+      # TODO: lint client code and server code
+      - name: Lint server code
+        run: npm run lint -w=server
+
+      # TODO: run server tests and client unit tests here. Make sure you are not
+      #       running E2E tests here. E2E tests will be run separately.
+      - name: Test server code
+        run: npm run test -w=server

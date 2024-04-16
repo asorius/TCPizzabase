@@ -11,6 +11,7 @@
     "@trpc/client": "^10.45.1"
   },
   "devDependencies": {
-    "@types/chance": "^1.1.6"
+    "@types/chance": "^1.1.6",
+    "@types/node": "^20.12.2"
   }
 }
