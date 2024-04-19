@@ -46,8 +46,8 @@ jobs:
       - name: Test server code
         env:
           TOKEN_KEY: ${{secrets.TOKEN_KEY}}
-          DB_NAME: testdb
-          DB_USER: turing
-          DB_PASSWORD: turing
+          DB_NAME: postgres
+          DB_USER: postgres
+          DB_PASSWORD: admin
           FIREBASE_STORAGE_BUCKET: ${{secrets.FIREBASE_STORAGE_BUCKET}}
-        run: npm run test -w=server
+        run: npm run test:mem -w=server
