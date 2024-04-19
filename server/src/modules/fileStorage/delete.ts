@@ -13,7 +13,6 @@ export default publicProcedure
 
       return responseCode
     } catch (error) {
-      console.log({ error })
       throw new Error('Delete failed')
     }
   })

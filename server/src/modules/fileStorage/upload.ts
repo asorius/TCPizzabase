@@ -23,7 +23,6 @@ export default publicProcedure
 
       return res
     } catch (error) {
-      console.log({ error })
       throw new Error('Upload failed')
     }
   })
