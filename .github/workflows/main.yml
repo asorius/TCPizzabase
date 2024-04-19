@@ -45,7 +45,6 @@ jobs:
       #       running E2E tests here. E2E tests will be run separately.
       - name: Test server code
         env:
-          CI: ${{ false }}
           TOKEN_KEY: ${{secrets.TOKEN_KEY}}
           DB_NAME: postgres
           DB_USER: postgres
