@@ -75,7 +75,7 @@ const config = schema.parse({
     bucket: env.FIREBASE_STORAGE_BUCKET,
   },
 })
-
+console.log(config.isCi)
 export default config
 
 // utility functions
