@@ -1,4 +1,4 @@
-cd ocodversion: '3.8'
+version: '3.8'
 services:
   db:
     image: postgres:16.1-alpine
@@ -19,6 +19,7 @@ services:
       DB_NAME: pizzabase
       DB_USER: postgres
       DB_PASSWORD: admin
+      FIREBASE_STORAGE_BUCKET: pizzabase-35ee7.appspot.com
     ports:
       - '3000'
     depends_on:
@@ -28,8 +29,10 @@ services:
       context: .
       dockerfile: ./client/Dockerfile
       args:
-        VITE_API_ORIGIN: http://localhost:3001
+        VITE_API_ORIGIN: http://localhost:3000
         VITE_API_PATH: /api/v1/trpc
+    environment:
+      API_PROXY_PASS: http://server:3000
     ports:
       - '3001:3000'
     depends_on:

@@ -1,10 +1,17 @@
-FROM node:latest-alpine
+FROM node:alpine
+
+WORKDIR /app
+
 COPY ../package*.json .
-COPY client/package*.json client/
-COPY server/package*.json server/
+COPY ../client/package*.json client/
+COPY ../server/package*.json server/
 RUN npm ci
 
-COPY . .
+COPY ../server/ server/
+
+WORKDIR /app/server
 RUN npm run build
+
 EXPOSE 3000
-CMD [ "npm start" ]
+
+CMD ["npm", "run", "start"]

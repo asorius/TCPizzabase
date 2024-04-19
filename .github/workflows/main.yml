@@ -31,13 +31,13 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18.19.0'
+          node-version: 'latest'
           cache: 'npm'
       #
       - name: Install dependencies
         run: npm ci
 
-      # TODO: lint client code and server code
+      # lint client code and server code
       - name: Lint server code
         run: npm run lint -w=server
 

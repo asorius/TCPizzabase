@@ -41,7 +41,7 @@ async function imageUploadHandler(event: Event) {
         // Send `base64Image` to the server using tRPC
         const response = await trpc.fileStorage.uploadImage.mutate({ base64Image, name: file.name })
         loading.value = false
-        if (response) {
+        if (response && response!==500) {
           imageUrl.value = response.downloadURL
           filePath.value = response.filePath
           loading.value = false

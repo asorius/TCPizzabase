@@ -4,6 +4,20 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies'
 import { newDb } from 'pg-mem'
 import * as entities from '../entities'
 
+// Let { PGHOST, PGDATABASE, PGUSER, PGPASSWORD, ENDPOINT_ID } = process.env;
+
+// const sql = postgres({
+//   host: PGHOST,
+//   database: PGDATABASE,
+//   username: PGUSER,
+//   password: PGPASSWORD,
+//   port: 5432,
+//   ssl: 'require',
+//   connection: {
+//     options: `project=${ENDPOINT_ID}`,
+//   },
+// });
+
 export function createDatabase(
   options: Partial<DataSourceOptions | { type: 'pg-mem' }> = { type: 'pg-mem' }
 ) {
