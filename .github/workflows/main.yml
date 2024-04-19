@@ -45,7 +45,7 @@ jobs:
       #       running E2E tests here. E2E tests will be run separately.
       - name: Test server code
         env:
-          TOKEN_KEY: ${{secrets.TOKEN_KEY}}
+          TOKEN_KEY: testkey
           DB_NAME: postgres
           DB_USER: postgres
           DB_PASSWORD: admin
