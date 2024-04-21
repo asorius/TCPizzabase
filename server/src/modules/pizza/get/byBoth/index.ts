@@ -6,13 +6,16 @@ async function filterByBoth({
   brand,
   country,
   db,
+  page = 0,
 }: {
   brand: string
   country: string
   db: DataSource
+  page: number
 }) {
   const title = brand
   const name = country
+
   const pizzas = await db.getRepository(Pizza).find({
     where: {
       brand: {
@@ -23,6 +26,8 @@ async function filterByBoth({
       },
     },
     relations: ['user', 'brand', 'images', 'brand.country', 'brand.pizzas'],
+    skip: page * 10,
+    take: 10,
   })
   if (!pizzas) {
     throw new TRPCError({

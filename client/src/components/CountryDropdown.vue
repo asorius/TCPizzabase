@@ -1,0 +1,33 @@
+<!-- eslint-disable vue/multi-word-component-names -->
+<script setup lang="ts">
+import { ref } from 'vue'
+
+import countries from '../utils/countryList'
+const country = ref('')
+</script>
+
+<template>
+  <div>
+    <label for="country">Select a country</label>
+    <select v-model="country" id="country">
+      <option v-for="country in countries" :key="country.label" :value="country.label">
+        <div>
+          <img
+            :src="`https://flagcdn.com/w20/${country.code.toLowerCase()}.png`"
+            :alt="country.code"
+          />
+        </div>
+        <span> {{ country.label }}, {{ country.code }} </span>
+      </option>
+    </select>
+  </div>
+</template>
+<style scoped>
+li div {
+  width: 20px;
+}
+image {
+  display: block;
+  width: 100%;
+}
+</style>

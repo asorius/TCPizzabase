@@ -2,7 +2,15 @@ import { Pizza } from '@server/entities/pizza'
 import { TRPCError } from '@trpc/server'
 import { DataSource } from 'typeorm'
 
-async function filterByCountry({ name, db }: { name: string; db: DataSource }) {
+async function filterByCountry({
+  name,
+  db,
+  page = 0,
+}: {
+  name: string
+  db: DataSource
+  page: number
+}) {
   const pizzas = await db.getRepository(Pizza).find({
     where: {
       brand: {
@@ -12,6 +20,8 @@ async function filterByCountry({ name, db }: { name: string; db: DataSource }) {
       },
     },
     relations: ['user', 'brand', 'images', 'brand.country', 'brand.pizzas'],
+    skip: page * 10,
+    take: 10,
   })
   if (!pizzas) {
     throw new TRPCError({

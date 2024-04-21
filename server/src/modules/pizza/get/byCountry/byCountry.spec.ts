@@ -34,7 +34,7 @@ pizza2.brand = brand2
 await db.getRepository(Pizza).save([pizza1, pizza2])
 
 const { get } = pizzaRoute
-it('Should return pizzas by country', async () => {
+it('Should returns pizza by country', async () => {
   const pizzas = await get({
     country: country2.name,
   })

@@ -36,8 +36,7 @@ await db.getRepository(Pizza).save([pizza1, pizza2])
 const { get } = pizzaRoute
 
 it('Should return pizzas by brand', async () => {
-  const pizzas = await get({ brand: brand1.title })
-
+  const pizzas = await get({ brand: brand2.title })
   expect(pizzas).toHaveLength(1)
-  expect(pizzas[0].brand.title).toEqual(brand1.title)
+  expect(pizzas[0].brand.title).toEqual(brand2.title)
 })
