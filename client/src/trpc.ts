@@ -4,6 +4,7 @@ import type { AppRouter } from '@server/shared/trpc'
 
 import { apiBase } from '@/config'
 import SuperJSON from 'superjson'
+import { getStoredAccessToken } from './utils/auth'
 
 export const trpc = createTRPCProxyClient<AppRouter>({
   // auto convert Date <-> string
@@ -14,9 +15,9 @@ export const trpc = createTRPCProxyClient<AppRouter>({
 
       // send the access token with every request
       headers: () => {
-        const token2 = 'asdfasdfasdfasdfgagdfasdf'
+        const token = getStoredAccessToken(localStorage)
         return {
-          Authorization: `Bearer ${token2}`
+          Authorization: `Bearer ${token}`
         }
       }
     })

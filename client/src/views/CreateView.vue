@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import Create from '../components/Create.vue'
-import { RouterLink } from 'vue-router'
+import Back from '../components/Back.vue'
 </script>
 
 <template>
   <main>
-    <RouterLink to="/">
-      <p class="green">back</p>
-    </RouterLink>
-    <Create />
+    <Back></Back>
+    <Create></Create>
   </main>
 </template>

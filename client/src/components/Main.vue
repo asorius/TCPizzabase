@@ -26,7 +26,7 @@ watch(
 <template>
   <div class="greetings">
     <RouterLink to="/create">
-      <h1 class="green">Add a pizza</h1>
+      <h1 class="green">Add a pizza333</h1>
     </RouterLink>
     <h3>Placeholder</h3>
     <div v-if="error">{{ error }}</div>
