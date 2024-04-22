@@ -4,7 +4,6 @@ services:
     image: postgres:16.1-alpine
     restart: always
     environment:
-      POSTGRES_NAME: pizzabase
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: admin
     ports:
@@ -16,10 +15,10 @@ services:
       context: .
       dockerfile: ./server/Dockerfile
     environment:
-      DB_NAME: pizzabase
+      DB_NAME: postgres
       DB_USER: postgres
       DB_PASSWORD: admin
-      FIREBASE_STORAGE_BUCKET: pizzabase-35ee7.appspot.com
+      DB_HOST: db
     ports:
       - '3000'
     depends_on:
@@ -29,12 +28,12 @@ services:
       context: .
       dockerfile: ./client/Dockerfile
       args:
-        VITE_API_ORIGIN: http://localhost:3000
+        VITE_API_ORIGIN: http://localhost:3001
         VITE_API_PATH: /api/v1/trpc
     environment:
       API_PROXY_PASS: http://server:3000
     ports:
-      - '3001:3000'
+      - '3001:80'
     depends_on:
       - server
 volumes:
