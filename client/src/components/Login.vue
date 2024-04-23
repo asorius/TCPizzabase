@@ -26,7 +26,7 @@ async function submitForm() {
 <template>
   <div class="min-h-screen flex items-center justify-center">
     <div class="bg-white p-8 rounded shadow-md w-full max-w-md">
-      <h2 class="text-2xl font-semibold mb-4">Register</h2>
+      <h2 class="text-2xl font-semibold mb-4">Log In</h2>
       <form @submit.prevent="submitForm">
         <div class="mb-4">
           <label for="email" class="block text-sm font-medium text-gray-700">Email</label>

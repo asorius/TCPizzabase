@@ -26,7 +26,6 @@ it('should create a pizza', async () => {
   }
 
   const createdPizza = await create(userInput)
-
   expect(createdPizza.name).toEqual(userInput.name)
   expect(createdPizza.user).toEqual(user)
   expect(createdPizza.brand.title).toEqual(userInput.brand)

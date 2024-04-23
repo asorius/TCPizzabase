@@ -1,12 +1,16 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from 'vue'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { trpc } from '../trpc'
 import { RouterLink } from 'vue-router'
+import { useUserStore } from '@/stores/user'
 const password = ref('')
 const confirmPassword = ref('')
 const email = ref('')
 const error = ref('')
+const router = useRouter()
+const { signUp } = useUserStore()
 async function submitForm() {
   if (password.value !== confirmPassword.value) {
     error.value = 'Passwords do not match'
@@ -15,10 +19,13 @@ async function submitForm() {
     }, 2000)
     return
   }
-  const signupResult = await trpc.user.signup.mutate({
+  const signupResult = await signUp({
     email: email.value,
     password: password.value
   })
+  if (signupResult) {
+    router.push({ name: 'login' })
+  }
   console.log(signupResult)
 }
 </script>
@@ -26,7 +33,7 @@ async function submitForm() {
 <template>
   <div class="min-h-screen flex items-center justify-center">
     <div class="bg-white p-8 rounded shadow-md w-full max-w-md">
-      <h2 class="text-2xl font-semibold mb-4">Register</h2>
+      <h2 class="text-2xl font-semibold mb-4">Create new account</h2>
       <form @submit.prevent="submitForm">
         <div class="mb-4">
           <label for="email" class="block text-sm font-medium text-gray-700">Email</label>

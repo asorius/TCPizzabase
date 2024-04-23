@@ -29,7 +29,7 @@ export default publicProcedure
     }
     // No filter arguments, return full list
     const pizzas = await db.getRepository(Pizza).find({
-      relations: ['user', 'brand', 'images'],
+      relations: ['user', 'brand', 'images', 'brand.country', 'brand.pizzas'],
       skip: page * 10,
       take: 10,
     })

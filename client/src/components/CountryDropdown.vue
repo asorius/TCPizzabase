@@ -1,9 +1,13 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 import countries from '../utils/countryList'
+const emit = defineEmits(['selectCountry'])
 const country = ref('')
+watch(country, () => {
+  emit('selectCountry', country.value)
+})
 </script>
 
 <template>

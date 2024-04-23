@@ -34,6 +34,7 @@ export default authenticatedProcedure
     if (!brand) {
       brand = new Brand()
       brand.title = userInput.brand
+      brand.country = country
     }
     // A new Image entity is always created to add it to the already existing list
     const image = new Image()
@@ -50,7 +51,7 @@ export default authenticatedProcedure
     pizza.images = [image]
 
     // Relate image to pizza
-    image.pizza = pizza
+    // image.pizza = pizza
 
     const createdPizza = await db.getRepository(Pizza).save(pizza)
 
