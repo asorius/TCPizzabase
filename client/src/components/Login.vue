@@ -17,14 +17,14 @@ async function submitForm() {
       password: password.value
     })
     router.push({ name: 'home' })
-  } catch (e) {
-    console.log(e)
+  } catch (e: any) {
+    error.value = e.message
   }
 }
 </script>
 
 <template>
-  <div class="min-h-screen flex items-center justify-center">
+  <div class="w-full h-full grid place-center">
     <div class="bg-white p-8 rounded shadow-md w-full max-w-md">
       <h2 class="text-2xl font-semibold mb-4">Log In</h2>
       <form @submit.prevent="submitForm">
@@ -51,7 +51,7 @@ async function submitForm() {
           />
         </div>
         <div v-if="error">{{ error }}</div>
-        <div class="flex justify-around w-1/2 m-auto">
+        <div class="flex justify-around md:w-1/2 m-auto">
           <button
             type="submit"
             class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300"

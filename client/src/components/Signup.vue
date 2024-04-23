@@ -19,14 +19,18 @@ async function submitForm() {
     }, 2000)
     return
   }
-  const signupResult = await signUp({
-    email: email.value,
-    password: password.value
-  })
-  if (signupResult) {
+  try {
+    await signUp({
+      email: email.value,
+      password: password.value
+    })
     router.push({ name: 'login' })
+  } catch (e: any) {
+    error.value = e.message
+    setTimeout(() => {
+      error.value = ''
+    }, 2000)
   }
-  console.log(signupResult)
 }
 </script>
 
@@ -55,6 +59,7 @@ async function submitForm() {
             name="password"
             class="mt-1 p-2 border rounded w-full"
             required
+            minlength="8"
           />
         </div>
         <div class="mb-4">
@@ -68,10 +73,11 @@ async function submitForm() {
             v-model="confirmPassword"
             class="mt-1 p-2 border rounded w-full"
             required
+            minlength="8"
           />
         </div>
         <div v-if="error">{{ error }}</div>
-        <div class="flex justify-around w-1/2 m-auto">
+        <div class="flex justify-around md:w-1/2 m-auto">
           <button
             type="submit"
             class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300"

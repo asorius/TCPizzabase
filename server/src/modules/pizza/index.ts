@@ -5,6 +5,7 @@ import get from './get'
 import update from './update'
 import deleteImage from './deleteImage'
 import getById from './getById'
+import searchOptions from './searchOptions'
 
 export default router({
   create,
@@ -13,4 +14,5 @@ export default router({
   deleteImage,
   getById,
   get,
+  searchOptions,
 })

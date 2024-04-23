@@ -1,7 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 const props = defineProps({ pizzaName: String, brand: String, country: String, imageUrl: String })
-console.log(props)
 </script>
 <template>
   <div class="bg-white rounded-lg shadow-md p-4">

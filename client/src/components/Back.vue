@@ -4,6 +4,6 @@ import { RouterLink } from 'vue-router'
 
 <template>
   <RouterLink to="/">
-    <p class="green">back</p>
+    <button class="border rounded px-4 py-1">back</button>
   </RouterLink>
 </template>

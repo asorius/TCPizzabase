@@ -27,33 +27,7 @@ async function imageUploadHandler(event: Event) {
     }
     selectedFile.value = file
     console.log(previewSource.value)
-    // const imageBlob = await compressImage({ file, quality: 0.3 })
-    // if (!imageBlob) {
-    //   error.value = 'Failed to compress image, try again'
-    //   return
-    // }
-    // console.log({
-    //   originalSize: file.size * 0.0009765625,
-    //   compressedSize: imageBlob.size * 0.0009765625
-    // })
-    // const reader = new FileReader()
-    // reader.onloadend = async () => {
-    //   message.value = 'Uploading image...'
-    //   if (reader.result) {
-    //     const raw = reader.result as string
-    //     // Remove base64 prefix
-    //     const base64Image = raw.replace(/^data:(.*;base64,)?/, '')
-    //     // Send `base64Image` to the server using tRPC
-    //     const response = await trpc.fileStorage.uploadImage.mutate({ base64Image, name: file.name })
-    //     loading.value = false
-    //     if (response && response !== 500) {
-    //       imageUrl.value = response.downloadURL
-    //       filePath.value = response.filePath
-    //       loading.value = false
-    //     }
-    //   }
-    // }
-    // reader.readAsDataURL(imageBlob)
+    // const imageBlob = await compressImage({ file, quality: }
   }
 }
 async function deleteImageHandler(event: Event) {
@@ -108,7 +82,14 @@ const handleSubmit = async (event: Event) => {
           imageSource: imageUrl.value
         })
         loading.value = false
-        console.log(creationResponse)
+        console.log({
+          brand: brand.value,
+          country: country.value,
+          name: pizza.value,
+          rating: 7,
+          imagePath: filePath.value,
+          imageSource: imageUrl.value
+        })
       }
     }
   }

@@ -15,13 +15,7 @@ watch(country, () => {
     <label for="country">Select a country</label>
     <select v-model="country" id="country">
       <option v-for="country in countries" :key="country.label" :value="country.label">
-        <div>
-          <img
-            :src="`https://flagcdn.com/w20/${country.code.toLowerCase()}.png`"
-            :alt="country.code"
-          />
-        </div>
-        <span> {{ country.label }}, {{ country.code }} </span>
+        {{ country.label }}, {{ country.code }}
       </option>
     </select>
   </div>
