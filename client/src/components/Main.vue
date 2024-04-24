@@ -1,24 +1,35 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from 'vue'
+import { ref, watch, watchEffect } from 'vue'
 import { trpc } from '../trpc'
 import PizzaSmall from '../components/PizzaSmall.vue'
 import { RouterLink } from 'vue-router'
 const pizzas = ref<any[] | []>([])
 const page = ref(0)
-const countryOptions = computed(() => {
-  const dbCountries = pizzas.value.map((pizza) => pizza.brand.country.name)
-  return new Set(dbCountries)
+const countryOptions = ref<string[]>([])
+const brandOptions = ref<string[]>([])
+watchEffect(async () => {
+  try {
+    const { countries, brands } = await trpc.pizza.searchOptions.query()
+    countryOptions.value = countries
+    brandOptions.value = brands
+  } catch (e) {
+    console.log(e)
+  }
 })
 const error = ref('')
-const countryFilter = ref([])
+const countryFilter = ref()
+const brandFilter = ref()
 watch(
   page,
   async () => {
     try {
-      const ll = await trpc.pizza.get.query({ country: '', brand: '', page: page.value })
-      pizzas.value = ll
-      console.log(ll)
+      const rawList = await trpc.pizza.get.query({
+        country: countryFilter.value,
+        brand: brandFilter.value,
+        page: page.value
+      })
+      pizzas.value = rawList
     } catch (e) {
       console.log(e)
     }
@@ -41,11 +52,18 @@ watch(
       <div v-if="pizzas.length">
         <h3>Current base:</h3>
         <select v-bind="countryFilter">
+          <option disabled value="">Select by country</option>
           <option v-for="country in countryOptions" :key="country" :value="country">
             {{ country }}
           </option>
         </select>
-        <div class="grid grid-flow-col auto-cols-max max-w-screen">
+        <select v-bind="brandFilter">
+          <option disabled value="">Select by brand</option>
+          <option v-for="brand in brandOptions" :key="brand" :value="brand">
+            {{ brand }}
+          </option>
+        </select>
+        <div class="grid grid-flow-col auto-cols-max w-3/4 h-full">
           <PizzaSmall
             v-for="pizza in pizzas"
             :pizza-name="pizza.name"

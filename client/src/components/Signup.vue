@@ -2,7 +2,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { trpc } from '../trpc'
 import { RouterLink } from 'vue-router'
 import { useUserStore } from '@/stores/user'
 const password = ref('')

@@ -7,7 +7,7 @@ import CountryDropdown from './CountryDropdown.vue'
 const pizza = ref('')
 const brand = ref('')
 const country = ref('')
-const rating = ref(0)
+// const rating = ref(0)
 const error = ref('')
 const loading = ref(false)
 const imageUrl = ref('')
@@ -30,7 +30,7 @@ async function imageUploadHandler(event: Event) {
     // const imageBlob = await compressImage({ file, quality: }
   }
 }
-async function deleteImageHandler(event: Event) {
+async function deleteImageHandler() {
   loading.value = true
   message.value = 'Deleting image...'
   const response = (await trpc.fileStorage.deleteImage.mutate({ path: filePath.value })) as number
@@ -42,7 +42,7 @@ async function deleteImageHandler(event: Event) {
     loading.value = false
   }
 }
-const handleSubmit = async (event: Event) => {
+const handleSubmit = async () => {
   // UPLOAD IMAGE
   if (!selectedFile.value) {
     console.log('no file selected')
@@ -53,10 +53,7 @@ const handleSubmit = async (event: Event) => {
     error.value = 'Failed to compress image, try again'
     return
   }
-  console.log({
-    originalSize: selectedFile.value.size * 0.0009765625,
-    compressedSize: imageBlob.size * 0.0009765625
-  })
+
   const reader = new FileReader()
   reader.onloadend = async () => {
     message.value = 'Uploading image...'
@@ -82,6 +79,7 @@ const handleSubmit = async (event: Event) => {
           imageSource: imageUrl.value
         })
         loading.value = false
+        console.log(creationResponse)
         console.log({
           brand: brand.value,
           country: country.value,

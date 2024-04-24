@@ -1,6 +1,5 @@
 import { authContext } from '@tests/utils/context'
-import { Brand, Country, Pizza, User } from '@server/entities'
-import { fakePizza, fakeUser } from '@server/entities/tests/fakes'
+import { Brand, Country, Pizza } from '@server/entities'
 import { createTestDatabase } from '@tests/utils/database'
 import { createCaller } from '@server/modules'
 
@@ -42,10 +41,9 @@ const pizzaRoute = createCaller(authContext({ db })).pizza
 describe('Get all possible search options', () => {
   it('should return a list of countries and brands', async () => {
     const { searchOptions } = pizzaRoute
-
     const options = await searchOptions()
     console.log(options)
-    expect(options.brands).toEqual(['brand1', 'brand2', 'brand3'])
+    expect(options.brands).toEqual(['brand1', 'brand2'])
     expect(options.countries).toEqual(['country1', 'country2'])
   })
 })

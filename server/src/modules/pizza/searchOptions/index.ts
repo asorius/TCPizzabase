@@ -1,4 +1,3 @@
-import { TRPCError } from '@trpc/server'
 import { publicProcedure } from '@server/trpc'
 import { Brand, Country } from '@server/entities'
 
@@ -16,7 +15,7 @@ export default publicProcedure.query(async ({ ctx: { db } }) => {
     .distinctOn(['country.name'])
     .getRawMany()
   return {
-    countries: countries.map((country) => country.name),
-    brands: brands.map((brand) => brand.title),
+    countries: countries.map((country) => country.country_name),
+    brands: brands.map((brand) => brand.brand_title),
   }
 })

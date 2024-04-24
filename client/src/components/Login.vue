@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from 'vue'
+import { ref } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
 import { useUserStore } from '../stores/user'
 
@@ -24,7 +24,7 @@ async function submitForm() {
 </script>
 
 <template>
-  <div class="w-full h-full grid place-center">
+  <div class="w-full h-full flex items-center justify-center">
     <div class="bg-white p-8 rounded shadow-md w-full max-w-md">
       <h2 class="text-2xl font-semibold mb-4">Log In</h2>
       <form @submit.prevent="submitForm">
