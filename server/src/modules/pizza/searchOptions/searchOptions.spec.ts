@@ -42,7 +42,6 @@ describe('Get all possible search options', () => {
   it('should return a list of countries and brands', async () => {
     const { searchOptions } = pizzaRoute
     const options = await searchOptions()
-    console.log(options)
     expect(options.brands).toEqual(['brand1', 'brand2'])
     expect(options.countries).toEqual(['country1', 'country2'])
   })

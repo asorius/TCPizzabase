@@ -10,22 +10,19 @@ const [user, user2] = await db
   .save([fakeUser(), fakeUser()])
 
 const mockPizza = fakePizza({ user })
+const mockPizza2 = fakePizza({ user })
 const pizzaRoute = createCaller(authContext({ db }, user)).pizza
 
 describe('Getting specific pizza data', () => {
   it('should return a pizza by id', async () => {
-    // Add one pizza per user
-    await db.getRepository(Pizza).save([fakePizza({ user: user2 }), mockPizza])
+    await db
+      .getRepository(Pizza)
+      .save([fakePizza({ user: user2 }), mockPizza, mockPizza2])
 
     const { getByUser } = pizzaRoute
+    const pizzas = await getByUser(mockPizza.user.id)
 
-    const pizza = await getByUser(mockPizza.id)
-
-    expect(pizza.name).toEqual(mockPizza.name)
-  })
-  it('should throw an error for non existing pizza', async () => {
-    const { getByUser } = pizzaRoute
-
-    await expect(getByUser(22)).rejects.toThrow(/not found/)
+    expect(pizzas).toHaveLength(2)
+    expect(pizzas[0].name).toEqual(mockPizza.name)
   })
 })

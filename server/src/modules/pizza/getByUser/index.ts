@@ -1,21 +1,14 @@
-import { Pizza, pizzaSchema, type PizzaBare } from '@server/entities/pizza'
+import { Pizza, type PizzaBare } from '@server/entities/pizza'
+import { userSchema } from '@server/entities/user'
 import { authenticatedProcedure } from '@server/trpc/authenticatedProcedure'
-import { TRPCError } from '@trpc/server'
 
 export default authenticatedProcedure
-  .input(pizzaSchema.shape.id)
-  .query(async ({ input: pizzaId, ctx: { db } }) => {
-    const pizza = (await db.getRepository(Pizza).findOne({
-      where: { id: pizzaId },
+  .input(userSchema.shape.id)
+  .query(async ({ input: userId, ctx: { db } }) => {
+    const pizzas = (await db.getRepository(Pizza).find({
+      where: { user: { id: userId } },
       relations: ['user', 'brand', 'images'],
-    })) as PizzaBare
+    })) as PizzaBare[]
 
-    if (!pizza) {
-      throw new TRPCError({
-        code: 'NOT_FOUND',
-        message: `Pizza was not found`,
-      })
-    }
-
-    return pizza
+    return pizzas
   })
