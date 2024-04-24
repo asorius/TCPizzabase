@@ -144,8 +144,14 @@ jobs:
                 "DB_NAME": "${{ secrets.PROD_DB_NAME }}",
                 "DB_USER": "${{ secrets.PROD_DB_USER }}",
                 "DB_PASSWORD": "${{ secrets.PROD_DB_PASSWORD }}",
-                "TOKEN_KEY": "${{secrets.TOKEN_KEY}}"
-                "FIREBASE_STORAGE_BUCKET": "${{secrets.FIREBASE_STORAGE_BUCKET}}"
+                "TOKEN_KEY": "${{secrets.TOKEN_KEY}}",
+                "FIREBASE_STORAGE_BUCKET": "${{secrets.FIREBASE_STORAGE_BUCKET}}",
+                "FS_CERT_URL":"${{secrets.FIREBASE_STORAGE_BUCKET}}",
+                "FS_CLIENT_EMAIL":"${{secrets.FS_CLIENT_EMAIL}}",
+                "FS_CLIENT_ID":"${{secrets.FS_CLIENT_ID}}",
+                "FS_PRIVATE_KEY":"${{secrets.FS_PRIVATE_KEY}}",
+                "FS_PRIVATE_KEY_ID":"${{secrets.FS_PRIVATE_KEY_ID}}",
+                "FS_PROJECT_ID":"${{secrets.FS_PROJECT_ID}}",
 
               }
             }
