@@ -56,7 +56,7 @@ jobs:
     runs-on: ubuntu-22.04
     if: github.ref == 'refs/heads/main'
     env:
-      API_ORIGIN: ${{ vars.API_ORIGIN }}
+      API_ORIGIN: https://pizzabase.uq04v1ilsbd18.eu-west-2.cs.amazonlightsail.com
       API_PATH: /api/v1/trpc
       CLIENT_IMAGE_TAG: client-${{ github.sha }}
       SERVER_IMAGE_TAG: server-${{ github.sha }}
