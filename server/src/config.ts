@@ -42,6 +42,8 @@ const schema = z
       // By default, log and synchronize the database schema only for tests and development.
       logging: z.preprocess(coerceBoolean, z.boolean().default(isDevTest)),
       synchronize: z.preprocess(coerceBoolean, z.boolean().default(isDevTest)),
+      ssl: z.preprocess(coerceBoolean, z.boolean().default(false)),
+      sslmode: z.string().default('require'),
     }),
     firebase: z.object({
       bucket: z.string(),
@@ -68,6 +70,8 @@ const config = schema.parse({
     password: env.DB_PASSWORD,
     logging: env.DB_LOGGING,
     synchronize: env.DB_SYNC,
+    ssl: env.DB_SSL,
+    sslmode: env.DB_SSLMODE,
   },
   firebase: {
     bucket: env.FIREBASE_STORAGE_BUCKET,
