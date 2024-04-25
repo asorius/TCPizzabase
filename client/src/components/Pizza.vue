@@ -3,7 +3,7 @@
 import { useRoute, useRouter } from 'vue-router'
 import { trpc } from '@/trpc'
 import { onBeforeMount, ref } from 'vue'
-import { Pizza } from '@server/entities'
+import type { Pizza } from '@server/shared/entities'
 import ImageAddition from './ImageAddition.vue'
 import { useUserStore } from '@/stores/user'
 import Loading from './Loading.vue'
