@@ -22,7 +22,9 @@ export class Pizza {
   @ManyToOne(() => User, (user) => user.pizzas, { cascade: ['insert'] })
   user: User
 
-  @ManyToOne(() => Brand, (brand) => brand.pizzas, { cascade: ['insert'] })
+  @ManyToOne(() => Brand, (brand) => brand.pizzas, {
+    cascade: ['insert'],
+  })
   brand: Brand
 
   @OneToMany(() => Image, (image) => image.pizza, {

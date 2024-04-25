@@ -4,12 +4,17 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { RouterLink } from 'vue-router'
 import { useUserStore } from '@/stores/user'
+import Error from './Error.vue'
+import Loading from './Loading.vue'
+const router = useRouter()
+
+const userStore = useUserStore()
+
 const password = ref('')
 const confirmPassword = ref('')
 const email = ref('')
 const error = ref('')
-const router = useRouter()
-const { signUp } = useUserStore()
+const loading = ref(false)
 async function submitForm() {
   if (password.value !== confirmPassword.value) {
     error.value = 'Passwords do not match'
@@ -19,23 +24,27 @@ async function submitForm() {
     return
   }
   try {
-    await signUp({
+    loading.value = true
+    await userStore.signUp({
       email: email.value,
       password: password.value
     })
-    router.push({ name: 'login' })
+    loading.value = false
+    router.push({ name: 'Login' })
   } catch (e: any) {
+    loading.value = false
     error.value = e.message
-    setTimeout(() => {
-      error.value = ''
-    }, 2000)
   }
+  setTimeout(() => {
+    error.value = ''
+  }, 2000)
 }
 </script>
 
 <template>
-  <div class="min-h-screen flex items-center justify-center">
-    <div class="bg-white p-8 rounded shadow-md w-full max-w-md">
+  <div class="w-full min-h-screen flex items-center justify-center">
+    <div class="bg-white p-8 rounded shadow-md w-11/12 max-w-md relative overflow-hidden">
+      <Loading :status="loading"></Loading>
       <h2 class="text-2xl font-semibold mb-4">Create new account</h2>
       <form @submit.prevent="submitForm">
         <div class="mb-4">
@@ -75,7 +84,7 @@ async function submitForm() {
             minlength="8"
           />
         </div>
-        <div v-if="error">{{ error }}</div>
+        <Error :message="error"></Error>
         <div class="flex justify-around md:w-1/2 m-auto">
           <button
             type="submit"

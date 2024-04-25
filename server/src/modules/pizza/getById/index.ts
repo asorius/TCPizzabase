@@ -8,7 +8,7 @@ export default publicProcedure
   .query(async ({ input, ctx: { db } }) => {
     const pizza = await db.getRepository(Pizza).findOne({
       where: { id: Number(input) },
-      relations: ['user', 'brand', 'images'],
+      relations: ['user', 'brand', 'brand.country', 'images', 'images.user'],
     })
     if (!pizza) {
       throw new TRPCError({

@@ -3,29 +3,40 @@
 import { ref } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
 import { useUserStore } from '../stores/user'
+import Error from './Error.vue'
+import Loading from './Loading.vue'
 
-const userStore = useUserStore()
+const { logIn } = useUserStore()
 
 const router = useRouter()
 const password = ref('')
 const email = ref('')
 const error = ref('')
+const loading = ref(false)
+
 async function submitForm() {
   try {
-    await userStore.logIn({
+    loading.value = true
+    await logIn({
       email: email.value,
       password: password.value
     })
-    router.push({ name: 'home' })
+    loading.value = false
+    router.push({ name: 'Home' })
   } catch (e: any) {
+    loading.value = false
     error.value = e.message
   }
+  setTimeout(() => {
+    error.value = ''
+  }, 2000)
 }
 </script>
 
 <template>
-  <div class="w-full h-full flex items-center justify-center">
-    <div class="bg-white p-8 rounded shadow-md w-full max-w-md">
+  <div class="w-full min-h-screen flex items-center justify-center">
+    <div class="bg-white p-8 rounded shadow-md w-11/12 max-w-md relative overflow-hidden">
+      <Loading :status="loading"></Loading>
       <h2 class="text-2xl font-semibold mb-4">Log In</h2>
       <form @submit.prevent="submitForm">
         <div class="mb-4">
@@ -47,10 +58,12 @@ async function submitForm() {
             id="password"
             name="password"
             class="mt-1 p-2 border rounded w-full"
+            minlength="8"
+            maxlength="60"
             required
           />
         </div>
-        <div v-if="error">{{ error }}</div>
+        <Error :message="error"></Error>
         <div class="flex justify-around md:w-1/2 m-auto">
           <button
             type="submit"
@@ -61,7 +74,7 @@ async function submitForm() {
           <RouterLink to="/">
             <button
               type="submit"
-              class="bg-transparent hover:bg-blue-500 text-blue-500 hover:text-white border border-blue-500 rounded px-4 py-2 rounded hover:bg-blue-600 transition duration-300"
+              class="bg-transparent text-blue-500 hover:text-white border border-blue-500 rounded px-4 py-2 hover:bg-blue-600 transition duration-300"
             >
               Cancel
             </button>

@@ -1,14 +1,13 @@
-import { Pizza, pizzaSchema } from '@server/entities/pizza'
+import { Pizza } from '@server/entities/pizza'
 import { authenticatedProcedure } from '@server/trpc/authenticatedProcedure'
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 
 export default authenticatedProcedure
-  .input(z.object({ pizzaId: pizzaSchema.shape.id, imageUrl: z.string() }))
+  .input(z.number())
   .mutation(async ({ input, ctx: { db } }) => {
     const pizza = await db.getRepository(Pizza).findOne({
-      where: { id: input.pizzaId },
-      relations: ['user', 'brand', 'images'],
+      where: { id: input },
     })
     if (!pizza) {
       throw new TRPCError({
@@ -16,7 +15,7 @@ export default authenticatedProcedure
         message: `Pizza was not found`,
       })
     }
-    pizza.images = pizza.images.filter((image) => image.path !== input.imageUrl)
-    const updatedPizza = await db.getRepository(Pizza).save(pizza)
-    return updatedPizza
+    const deletedPizza = await db.getRepository(Pizza).remove(pizza)
+
+    return deletedPizza
   })

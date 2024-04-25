@@ -1,8 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import CreateView from '../views/CreateView.vue'
-import SignupView from '@/views/SignupView.vue'
-import LoginView from '@/views/LoginView.vue'
+
 import { authenticate } from './guards'
 
 const router = createRouter({
@@ -10,24 +7,34 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: HomeView
+      name: 'Home',
+      component: () => import('@/views/HomeView.vue')
     },
     {
       path: '/create',
-      name: 'create',
+      name: 'Create',
       beforeEnter: [authenticate],
-      component: CreateView
+      component: () => import('@/views/CreateView.vue')
     },
     {
       path: '/signup',
-      name: 'signup',
-      component: SignupView
+      name: 'Signup',
+      component: () => import('@/views/SignupView.vue')
     },
     {
       path: '/login',
-      name: 'login',
-      component: LoginView
+      name: 'Login',
+      component: () => import('@/views/LoginView.vue')
+    },
+    {
+      path: '/pizza/:id',
+      name: 'Pizza',
+      component: () => import('@/views/PizzaView.vue')
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'NotFound',
+      component: () => import('@/views/NotFoundView.vue')
     }
   ]
 })

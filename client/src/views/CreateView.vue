@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import Create from '../components/Create.vue'
-import Back from '../components/Back.vue'
 import Navbar from '../components/Navbar.vue'
 </script>
 
 <template>
-  <main>
+  <main class="bg-gray-200 min-h-screen">
     <Navbar></Navbar>
     <div class="container">
-      <Back></Back>
+      <div class="text-4xl p-4 text-center">🍕</div>
       <Create></Create>
+      <div class="text-4xl p-4 text-center">🌶️</div>
     </div>
   </main>
 </template>

@@ -24,12 +24,16 @@ it('should remove an image from image list', async () => {
       pizzaId: storedPizza.id,
       imageUrl: 'url1',
       imagePath: 'images/url1',
+      rating: 4,
+      userId: user.id,
     })
 
     await pizzaRoute.update({
       pizzaId: storedPizza.id,
       imageUrl: 'url2',
       imagePath: 'images/url2',
+      rating: 4,
+      userId: user.id,
     })
 
     const pizzaWithImages = await db
@@ -38,13 +42,17 @@ it('should remove an image from image list', async () => {
 
     const result = await pizzaRoute.deleteImage({
       pizzaId: storedPizza.id,
-      imageUrl: 'url1',
+      imageUrl: 'images/url1',
     })
+
     // Confirm old stored value
     expect(pizzaWithImages?.images).toHaveLength(2)
+    const newlist = await db
+      .getRepository(Pizza)
+      .findOne({ where: { id: storedPizza.id }, relations: ['images', 'user'] })
 
     // Check new updated value
-    expect(result.images).toHaveLength(1)
+    expect(newlist?.images).toHaveLength(1)
     expect(result.images[0].source).toEqual('url2')
     expect(result.images[0].path).toEqual('images/url2')
   }

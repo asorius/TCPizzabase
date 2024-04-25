@@ -4,7 +4,7 @@ import Navbar from '../components/Navbar.vue'
 </script>
 
 <template>
-  <main>
+  <main class="bg-gray-200">
     <Navbar></Navbar>
     <Login />
   </main>

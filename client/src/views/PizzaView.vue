@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import Signup from '../components/Signup.vue'
+import Pizza from '../components/Pizza.vue'
 import Navbar from '../components/Navbar.vue'
 </script>
 
 <template>
-  <main class="bg-gray-200">
+  <main>
     <Navbar></Navbar>
-    <Signup />
+    <Pizza />
   </main>
 </template>
