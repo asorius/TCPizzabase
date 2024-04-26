@@ -10,7 +10,6 @@ const pizzas = ref<any[] | []>([])
 onBeforeMount(async () => {
   try {
     const list = await trpc.pizza.getByUser.query(Number(userStore.authUserId))
-    console.log(list)
     pizzas.value = list
   } catch (e) {
     console.log(e)

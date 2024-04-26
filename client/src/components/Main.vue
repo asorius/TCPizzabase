@@ -6,6 +6,7 @@ import PizzaSmall from '../components/PizzaSmall.vue'
 import { RouterLink } from 'vue-router'
 const pizzas = ref<any[] | []>([])
 const page = ref(0)
+const nextPage = ref(false)
 const countryOptions = ref<string[]>([])
 const brandOptions = ref<string[]>([])
 
@@ -15,7 +16,6 @@ onBeforeMount(async () => {
     const { countries, brands } = await trpc.pizza.searchOptions.query()
     countryOptions.value = countries
     brandOptions.value = brands
-    console.log(countries, brands)
   } catch (e) {
     console.log(e)
   }
@@ -27,13 +27,26 @@ const brandFilter = ref()
 watch(
   page,
   async () => {
-    // should query the next batch whenever page is changed theoretically
+    // should query the next batch whenever page value changes
     try {
-      const rawList = await trpc.pizza.get.query({
-        country: countryFilter.value,
-        brand: brandFilter.value,
-        page: page.value
-      })
+      const [rawList, rawListSecondPage] = await Promise.all([
+        trpc.pizza.get.query({
+          country: countryFilter.value,
+          brand: brandFilter.value,
+          page: page.value
+        }),
+        trpc.pizza.get.query({
+          country: countryFilter.value,
+          brand: brandFilter.value,
+          page: page.value + 1
+        })
+      ])
+      // check if there even is a next page
+      if (rawListSecondPage.length) {
+        nextPage.value = true
+      } else {
+        nextPage.value = false
+      }
       pizzas.value = rawList
     } catch (e) {
       console.log(e)
@@ -97,6 +110,14 @@ watch([countryFilter, brandFilter], async () => {
     </div>
     <div v-if="pizzas.length">
       <h3 class="w-1/2 mx-auto text-center text-2xl py-4">Current base</h3>
+      <div v-if="nextPage">
+        <!-- to set page to previous one -->
+        <button v-if="page - 1 >= 0" @click="page - 1">{{ page - 1 }}</button>
+        <!-- current page display -->
+        <div class="text-gray">{{ page }}</div>
+        <!-- to set page to next -->
+        <button @click="page + 1">{{ page + 1 }}</button>
+      </div>
       <div class="grid place-content-center grid-flow-row md:grid-flow-col gap-6">
         <!-- These select does not bind how they should for some reason -->
         <label for="countryFilter" class="grid place-content-center">Filter by country</label>

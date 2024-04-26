@@ -42,7 +42,6 @@ async function deleteImageHandler(filePath: string) {
   }
   loading.value = true
   const firebase_response = await trpc.fileStorage.deleteImage.mutate({ path: filePath })
-  console.log(firebase_response)
   if (firebase_response === 204) {
     await trpc.pizza.deleteImage.mutate({
       pizzaId: pizza.value.id,
