@@ -9,6 +9,8 @@ Pizzas should be able to be filtered by name, brand, or country by the user.
 Anonymous user can: sign up, login, see pizzas with images ratings.
 Logged in user can: add new pizza with a rating and image, or add their own image and rating to already existing pizza.
 
+Live version: https://pizzabase.uq04v1ilsbd18.eu-west-2.cs.amazonlightsail.com/
+
 ## Setup
 
 1. `npm install`
