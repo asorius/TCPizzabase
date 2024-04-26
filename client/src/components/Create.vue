@@ -87,7 +87,7 @@ const handleSubmit = async () => {
 </script>
 
 <template>
-  <div class="w-11/12 bg-white p-6 rounded-lg shadow-md mx-auto relative">
+  <div class="w-11/12 md:w-1/2 max-w-lg bg-white p-6 rounded-lg shadow-md mx-auto relative">
     <Loading :status="loading"></Loading>
     <h1 class="text-2xl font-semibold mb-4">Create a New Pizza</h1>
 
@@ -137,8 +137,14 @@ const handleSubmit = async () => {
       <div v-if="previewSource" class="mb-4">
         <img :src="previewSource" alt="preview" fill :style="{ objectFit: 'contain' }" />
       </div>
-      <div class="mb-4">
-        <select v-model="rating" required class="border rounded p-2 text-center w-full">
+      <div class="mb-4 text-center">
+        <label for="rating">Rate your pizza:</label>
+        <select
+          id="rating"
+          v-model="rating"
+          required
+          class="border rounded p-2 text-center w-full md:w-12 md:mx-4"
+        >
           <option v-for="rate in ratings" :key="rate" :value="rate">{{ rate }}</option>
         </select>
       </div>

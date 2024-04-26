@@ -65,6 +65,7 @@ const handleSubmit = async () => {
       if (response && response !== 500) {
         imageUrl.value = response.downloadURL
         filePath.value = response.filePath
+
         userStore.authUserId &&
           (await trpc.pizza.update.mutate({
             imagePath: filePath.value,
@@ -74,11 +75,11 @@ const handleSubmit = async () => {
             userId: userStore.authUserId
           }))
         loading.value = false
+        emit('close')
       }
     }
   }
   reader.readAsDataURL(imageBlob)
-  emit('close')
 }
 </script>
 
@@ -90,8 +91,14 @@ const handleSubmit = async () => {
       @submit.prevent="handleSubmit"
       class="max-w-md mx-auto p-4 grid gap-2"
     >
-      <div class="mb-4">
-        <select v-model="rating" required class="border rounded p-2 text-center w-full">
+      <div class="mb-4 text-center">
+        <label for="rating">Rate your pizza:</label>
+        <select
+          id="rating"
+          v-model="rating"
+          required
+          class="border rounded p-2 text-center w-full md:w-12 md:mx-4"
+        >
           <option v-for="rating in ratings" :key="rating" :value="rating">{{ rating }}</option>
         </select>
       </div>

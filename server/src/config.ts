@@ -47,6 +47,9 @@ const schema = z
     }),
     firebase: z.object({
       bucket: z.string(),
+      filePath: z
+        .enum(['development', 'production', 'staging', 'test'])
+        .default('development'),
     }),
   })
   .readonly()
@@ -75,6 +78,7 @@ const config = schema.parse({
   },
   firebase: {
     bucket: env.FIREBASE_STORAGE_BUCKET,
+    filePath: env.NODE_ENV,
   },
 })
 export default config

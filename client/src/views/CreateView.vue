@@ -6,7 +6,7 @@ import Navbar from '../components/Navbar.vue'
 <template>
   <main class="bg-gray-200 min-h-screen">
     <Navbar></Navbar>
-    <div class="container">
+    <div class="container mx-auto">
       <div class="text-4xl p-4 text-center">🍕</div>
       <Create></Create>
       <div class="text-4xl p-4 text-center">🌶️</div>

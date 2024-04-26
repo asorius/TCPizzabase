@@ -1,11 +1,11 @@
 // import { authenticatedProcedure } from '@server/trpc/authenticatedProcedure'
 import { z } from 'zod'
 import uploadImage from '@server/firebase/upload'
-import { publicProcedure } from '../../trpc'
+import { authenticatedProcedure } from '@server/trpc/authenticatedProcedure'
 
 // Left procedure public to test implementation from front end without dabatase actions
 // Otherwise, procedure will be authenticated
-export default publicProcedure
+export default authenticatedProcedure
   .input(
     z.object({
       base64Image: z.string(),

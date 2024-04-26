@@ -56,11 +56,12 @@ watch([countryFilter, brandFilter], async () => {
     console.log(e)
   }
 })
-console.log(countryFilter.value)
 </script>
 
 <template>
-  <header class="h-80 w-full flex justify-center items-center bg-hero-image bg-center bg-cover">
+  <header
+    class="h-80 lg:h-96 w-full flex justify-center items-center bg-hero-image bg-center bg-cover"
+  >
     <h1
       class="bg-white w-1/2 max-w-80 text-4xl md:text-7xl font-bold p-4 rounded-lg text-black mix-blend-screen"
     >
@@ -98,14 +99,14 @@ console.log(countryFilter.value)
       <h3 class="w-1/2 mx-auto text-center text-2xl py-4">Current base</h3>
       <div class="grid place-content-center grid-flow-row md:grid-flow-col gap-6">
         <!-- These select does not bind how they should for some reason -->
-        <label for="countryFilter">Filter by country</label>
+        <label for="countryFilter" class="grid place-content-center">Filter by country</label>
         <select id="countryFilter" v-bind="countryFilter" class="border rounded py-2">
           <option value="" selected>All</option>
           <option v-for="country in countryOptions" :key="country" :value="country">
             {{ country }}
           </option>
         </select>
-        <label for="brandFilter">Filter by brand</label>
+        <label for="brandFilter" class="grid place-content-center">Filter by brand</label>
         <select id="brandFilter" v-bind="brandFilter" class="border rounded py-2">
           <option value="" selected>All</option>
           <option v-for="brand in brandOptions" :key="brand" :value="brand">

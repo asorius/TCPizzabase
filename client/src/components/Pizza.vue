@@ -60,6 +60,7 @@ async function deleteImageHandler(filePath: string) {
 async function onClose() {
   const updatedPizza = await trpc.pizza.getById.query(Number(route.params.id))
   pizza.value = updatedPizza
+
   showImageAdd.value = false
 }
 </script>
