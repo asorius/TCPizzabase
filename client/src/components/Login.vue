@@ -67,6 +67,7 @@ async function submitForm() {
         <div class="flex justify-around md:w-1/2 m-auto">
           <button
             type="submit"
+            id="loginButton"
             class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300"
           >
             Log in

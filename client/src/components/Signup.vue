@@ -88,6 +88,7 @@ async function submitForm() {
         <div class="flex justify-around md:w-1/2 m-auto">
           <button
             type="submit"
+            id="signupButton"
             class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300"
           >
             Sign up
@@ -95,7 +96,7 @@ async function submitForm() {
           <RouterLink to="/">
             <button
               type="submit"
-              class="bg-transparent hover:bg-blue-500 text-blue-500 hover:text-white border border-blue-500 rounded px-4 py-2 rounded hover:bg-blue-600 transition duration-300"
+              class="bg-transparent text-blue-500 hover:text-white border border-blue-500 rounded px-4 py-2 rounded hover:bg-blue-600 transition duration-300"
             >
               Cancel
             </button>

@@ -101,6 +101,7 @@ watch([countryFilter, brandFilter], async () => {
           </p>
           <RouterLink
             to="/create"
+            id="createNew"
             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-3/4 mx-auto my-5 text-center"
           >
             <button>Create New Pizza</button>

@@ -91,7 +91,7 @@ async function onClose() {
           <Loading :status="loading"></Loading>
           <img :src="image.source as string" alt="Pizza Image" class="w-full" />
           <div class="mt-2 grid grid-flow-col place-content-center">
-            <div>{{ image.rating }} / 10 ⭐</div>
+            <div id="pizzaRating">{{ image.rating }} / 10 ⭐</div>
             <button
               v-if="image.user.id === userStore.authUserId"
               @click="() => deleteImageHandler(image.path as string)"

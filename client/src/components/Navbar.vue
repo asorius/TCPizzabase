@@ -28,6 +28,7 @@ const toggleMenu = () => {
 
       <div v-if="userStore.isLoggedIn" class="user-menu relative">
         <button
+          id="userMenu"
           @click="toggleMenu"
           class="menu-button bg-blue-500 text-white px-4 py-2 rounded-md text-ellipsis"
         >
@@ -39,6 +40,7 @@ const toggleMenu = () => {
         >
           <li>
             <RouterLink
+              id="viewPersonalBase"
               to="/personal"
               class="block px-4 py-2 text-gray-800 hover:bg-blue-100 underline"
             >
@@ -47,6 +49,7 @@ const toggleMenu = () => {
           </li>
           <li>
             <button
+              id="logout"
               class="border rounded p-1 px-2 mx-auto block text-gray-800 hover:bg-blue-100"
               @click="userStore.logOut"
             >
@@ -58,14 +61,14 @@ const toggleMenu = () => {
       <div v-else class="flex-none grid gap-4 grid-flow-col">
         <RouterLink
           to="/login"
-          data-testid="logo"
+          id="login"
           title="Home"
           class="bg-blue-500 hover:bg-blue-700 text-white text-sm font-normal hover:text-white py-1 px-4 border border-blue-500 hover:border-transparent rounded"
           >Login</RouterLink
         >
         <RouterLink
           to="/signup"
-          data-testid="logo"
+          id="signup"
           title="Home"
           class="bg-transparent hover:bg-blue-500 text-blue-700 text-sm font-normal hover:text-white py-1 px-4 border border-blue-500 hover:border-transparent rounded"
           >Sign Up</RouterLink

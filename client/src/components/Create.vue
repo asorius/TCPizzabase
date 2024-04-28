@@ -81,6 +81,7 @@ const handleSubmit = async () => {
     }
     reader.readAsDataURL(imageBlob)
   } catch (e) {
+    console.log('error from client')
     error.value = 'Something went wrong, please try again'
   }
 }
@@ -99,7 +100,7 @@ const handleSubmit = async () => {
       <div class="mb-4">
         <input
           type="text"
-          id="pizza"
+          id="pizzaName"
           v-model="pizza"
           placeholder="Pizza name"
           required
@@ -111,7 +112,7 @@ const handleSubmit = async () => {
       <div class="mb-4">
         <input
           type="text"
-          id="brand"
+          id="brandName"
           v-model="brand"
           placeholder="Brand"
           required
@@ -127,7 +128,7 @@ const handleSubmit = async () => {
         <input
           type="file"
           name="image"
-          id="image"
+          id="imageInput"
           accept="image/*"
           capture="environment"
           @change="imageUploadHandler"

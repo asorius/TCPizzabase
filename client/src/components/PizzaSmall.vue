@@ -13,7 +13,7 @@ const average = computed(() => {
 })
 </script>
 <template>
-  <RouterLink :to="'/pizza/' + props.id">
+  <RouterLink :to="'/pizza/' + props.id" :id="'pizza' + props.id">
     <div class="bg-white rounded-lg shadow-md p-4">
       <img
         :src="props.imageUrl"
