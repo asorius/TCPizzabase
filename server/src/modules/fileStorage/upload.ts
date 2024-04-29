@@ -20,10 +20,8 @@ export default authenticatedProcedure
         file: imageBuffer,
         name: input.name,
       })
-      console.log({ upload: 'sucess' })
       return res
     } catch (error) {
-      console.log({ errorupload: error })
       throw new Error('Upload failed')
     }
   })

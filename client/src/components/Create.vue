@@ -81,7 +81,6 @@ const handleSubmit = async () => {
     }
     reader.readAsDataURL(imageBlob)
   } catch (e) {
-    console.log('error from client')
     error.value = 'Something went wrong, please try again'
   }
 }

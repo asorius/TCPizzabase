@@ -22,7 +22,9 @@ onBeforeMount(async () => {
     <h3 class="w-1/2 mx-auto text-center text-2xl py-4">Current base</h3>
     <p>Pizzas you've created or have uploaded a review</p>
     <div v-if="pizzas.length">
-      <div class="grid md:grid-flow-col auto-cols-max gap-4 w-3/4 place-content-center h-full">
+      <div
+        class="grid mx-auto md:grid-flow-row md:grid-cols-2 lg:grid-cols-4 auto-rows-auto gap-4 w-3/4 place-content-center h-full lg:w-full lg:max-w-4xl border"
+      >
         <PizzaSmall
           v-for="pizza in pizzas"
           :id="pizza.id"

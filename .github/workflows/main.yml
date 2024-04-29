@@ -10,19 +10,10 @@ jobs:
       postgres:
         image: postgres:16.1-alpine
         env:
-          # Postgres service allows creating a user and a database
-          # if we provide some specific environment variables to it.
-          # You can find out more about these environment variables
-          # by visiting https://hub.docker.com/_/postgres and looking
-          # at the "Environment Variables" section.
-          # No need to overthink what is going on here just yet. We
-          # will spend more time on Docker later.
           POSTGRES_USER: turing
           POSTGRES_PASSWORD: turing
           POSTGRES_DB: testdb
         ports:
-          # We will need to connect to it somehow. We will use the default
-          # Postgres port 5432.
           - 5432:5432
     steps:
       - name: Check out repository
@@ -41,8 +32,6 @@ jobs:
       - name: Lint server code
         run: npm run lint -w=server
 
-      # TODO: run server tests and client unit tests here. Make sure you are not
-      #       running E2E tests here. E2E tests will be run separately.
       - name: Test server code
         env:
           TOKEN_KEY: testkey
@@ -51,6 +40,43 @@ jobs:
           DB_PASSWORD: admin
           FIREBASE_STORAGE_BUCKET:
         run: npm run test:mem -w=server
+
+      # E2E testing
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Start server for E2E tests
+        run: npm run dev -w=server &
+        env:
+          DB_USER: turing
+          DB_PASSWORD: turing
+          DB_NAME: testdb
+          DB_HOST: localhost
+          PORT: 3000
+
+      - name: Build front end for E2E tests
+        run: npm run build -w=client
+        env:
+          VITE_API_ORIGIN: http://localhost:3000
+          VITE_API_PATH: /api/v1/trpc
+
+      - name: Wait for server to startup
+        uses: Jtalk/url-health-check-action@v3.2
+        with:
+          max-attempts: 5
+          retry-delay: 5s
+          url: http://localhost:3000/api/health
+
+      - name: Test client E2E
+        run: npm run test:e2e -w=client
+
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: playwright-report
+          path: client/playwright-report/
+          retention-days: 7
+  # lightsail deployment
   build-deploy:
     needs: test
     runs-on: ubuntu-22.04

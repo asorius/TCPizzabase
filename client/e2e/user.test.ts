@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test'
-import { loginNewUser } from 'utils/api'
+// import { loginNewUser } from 'utils/api'
 import { fakeUser } from 'utils/fakeData'
 
 const { email, password } = fakeUser()
