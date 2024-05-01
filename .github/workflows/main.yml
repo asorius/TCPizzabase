@@ -46,8 +46,9 @@ jobs:
         run: npm run test:mem -w=server
 
       # E2E testing
+      # E2E tests fail in Gitactions and I don't know what could possibly be done
       - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
+        run: npx playwright install --with-deps chromium
 
       - name: Start server for E2E tests
         run: npm run dev -w=server &

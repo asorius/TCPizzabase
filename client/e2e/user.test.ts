@@ -1,14 +1,12 @@
 import { test, expect } from '@playwright/test'
-// import { loginNewUser } from 'utils/api'
+
 import { fakeUser } from 'utils/fakeData'
 
 const { email, password } = fakeUser()
+
 test.describe.serial('signup and login sequence', () => {
   test('visitor can signup', async ({ page }) => {
-    // Given (ARRANGE)
     await page.goto('/signup')
-
-    // When (ACT)
 
     await page.getByLabel('Email').fill(email)
     await page.getByLabel('Password', { exact: true }).fill(password)
@@ -22,7 +20,6 @@ test.describe.serial('signup and login sequence', () => {
   test('visitor can not access personal page before login', async ({ page }) => {
     await page.goto('/personal')
 
-    // user is redirected to login page
     await page.waitForURL('/login')
   })
 
