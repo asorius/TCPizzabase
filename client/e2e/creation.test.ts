@@ -21,7 +21,6 @@ test.describe.serial('creation features', () => {
     await page.getByLabel('Email').fill(email)
     await page.getByLabel('Password').fill(password)
     await page.locator('#loginButton').click()
-    // await page.goto('/')
 
     expect(await page.locator('#createNew')).toBeVisible()
 
