@@ -50,13 +50,12 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Start server for E2E tests
+        run: npm run dev -w=server &
         env:
           TOKEN_KEY: testkey
-          DB_NAME: postgres
           DB_USER: postgres
           DB_PASSWORD: turing
           FIREBASE_STORAGE_BUCKET:
-        run: npm run dev -w=server
 
       - name: Build front end for E2E tests
         run: npm run build -w=client
