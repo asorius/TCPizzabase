@@ -50,7 +50,7 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Start server for E2E tests
-        run: npm run dev -w=server &
+        run: npm run dev -w=server
         env:
           TOKEN_KEY: testkey
           DB_NAME: postgres
