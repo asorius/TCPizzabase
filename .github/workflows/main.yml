@@ -40,7 +40,7 @@ jobs:
           TOKEN_KEY: testkey
           DB_NAME: postgres
           DB_USER: postgres
-          DB_PASSWORD: admin
+          DB_PASSWORD: turing
           FIREBASE_STORAGE_BUCKET:
 
         run: npm run test:mem -w=server
@@ -52,10 +52,10 @@ jobs:
       - name: Start server for E2E tests
         run: npm run dev -w=server &
         env:
-          OKEN_KEY: testkey
+          TOKEN_KEY: testkey
           DB_NAME: postgres
           DB_USER: postgres
-          DB_PASSWORD: admin
+          DB_PASSWORD: turing
           FIREBASE_STORAGE_BUCKET:
 
       - name: Build front end for E2E tests
