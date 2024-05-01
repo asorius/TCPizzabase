@@ -47,7 +47,7 @@ jobs:
 
       # E2E testing
       - name: Install Playwright Browsers
-        run: npx playwright install --with-deps chromium
+        run: npx playwright install --with-deps
 
       - name: Start server for E2E tests
         run: npm run dev -w=server &
