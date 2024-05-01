@@ -39,7 +39,7 @@ jobs:
         env:
           TOKEN_KEY: testkey
           DB_NAME: postgres
-          DB_USER: postgres
+          DB_USER: turing
           DB_PASSWORD: turing
           FIREBASE_STORAGE_BUCKET:
 
@@ -53,7 +53,8 @@ jobs:
         run: npm run dev -w=server &
         env:
           TOKEN_KEY: testkey
-          DB_USER: postgres
+          DB_NAME: postgres
+          DB_USER: turing
           DB_PASSWORD: turing
           FIREBASE_STORAGE_BUCKET:
 
